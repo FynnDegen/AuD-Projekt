@@ -43,6 +43,10 @@ class TileMap {
         return tileMap[pMapPosY][pMapPosX].getY();
     }
     
+    int getState(int pMapPosX, int pMapPosY){
+        return tileMap[pMapPosY][pMapPosY].getState();
+    }
+    
     int getSwordPosX(int pMapPosX, int pMapPosY, int pDirec) {
         switch(pDirec) {
             case 0:
