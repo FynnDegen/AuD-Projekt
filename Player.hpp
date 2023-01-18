@@ -13,7 +13,6 @@ class Player{
         SVG *canvas;
         TileMap *tileMap;
         
-        Image player;
         Sprite sprite;
         Sword sword;
     
