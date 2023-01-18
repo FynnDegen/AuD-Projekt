@@ -6,8 +6,6 @@ class Player{
     
         int mapPosX;
         int mapPosY;
-        int x;
-        int y;
         int direc;
     
         SVG *canvas;
@@ -26,10 +24,9 @@ class Player{
             mapPosY = pMapPosY;
             this -> canvas = canvas;
             this -> tileMap = tileMap;
-            x = tileMap -> getTilePosX(mapPosX, mapPosY);
-            y = tileMap -> getTilePosY(mapPosX, mapPosY);
             
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/PlayerUp.png", "gfx/PlayerLeft.png",  "gfx/PlayerDown.png", "gfx/PlayerRight.png");
+            
             sword = Sword(tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), canvas);
         }
     
@@ -103,19 +100,4 @@ class Player{
             attDmg = pAttDmg;
         }
     
-        int getX() {
-            return x;
-        }
-    
-        void setX(int pX) {
-            x = pX;
-        }
-    
-        int getY() {
-            return y;
-        }
-    
-        void setY(int pY) {
-            y = pY;
-        }
 };

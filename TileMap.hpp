@@ -43,8 +43,15 @@ class TileMap {
         return tileMap[pMapPosY][pMapPosX].getY();
     }
     
-    int getState(int pMapPosX, int pMapPosY){
-        return tileMap[pMapPosY][pMapPosY].getState();
+    // Funkt net so richtig
+    int getTileState(int pMapPosX, int pMapPosY){
+        int z = tileMap[pMapPosY][pMapPosX].getState();
+        return z;
+    }
+    
+    // Funktioniert
+    void setState(int pMapPosX, int pMapPosY, int n){
+        tileMap[pMapPosY][pMapPosX].setState(n);
     }
     
     int getSwordPosX(int pMapPosX, int pMapPosY, int pDirec) {
