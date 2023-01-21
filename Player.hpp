@@ -30,10 +30,11 @@ class Player{
             sword = Sword(tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), canvas);
         }
     
-        void keyMovement(string pKey){
+        void keyMovement(string pKey, int &pHitStatus, int &pSwordX, int &pSwordY){
             if(pKey == "w"){
                 sprite.toFront(0);
                 direc = 0;
+                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
                 if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0){
                     mapPosY--;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
@@ -42,6 +43,7 @@ class Player{
             } else if(pKey == "a"){
                 sprite.toFront(1);
                 direc = 1;
+                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
                 if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0){
                     mapPosX--;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY)); 
@@ -50,6 +52,7 @@ class Player{
             } else if(pKey == "s"){
                 sprite.toFront(2);
                 direc = 2;
+                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
                 if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0){
                     mapPosY++;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
@@ -58,6 +61,7 @@ class Player{
             } else if(pKey == "d"){
                 sprite.toFront(3);
                 direc = 3;
+                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
                 if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0){
                     mapPosX++;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
@@ -65,6 +69,17 @@ class Player{
                 }
             }else if(pKey == "q") {
                 sword.melee();
+                if (tileMap -> swordHit(mapPosX, mapPosY, direc) == 1){
+                    pHitStatus = 1;
+                    pSwordX = tileMap -> getSwordBoardX(mapPosX, mapPosY, direc);
+                    pSwordY = tileMap -> getSwordBoardY(mapPosX, mapPosY, direc);
+                } else {
+                    pHitStatus = 0;
+                    pSwordX = 0;
+                    pSwordY = 0;
+                }
+                
+                
             }else if(pKey == "ArrowUp") {
                 sprite.toFront(0);
                 direc = 0;
@@ -98,6 +113,15 @@ class Player{
 
         void setAttDmg(int pAttDmg) {
             attDmg = pAttDmg;
+        }
+    
+        // Brauchen wir, weil nur Player das Schwert kennt
+        int getSwordX(){
+            return 0;
+        }
+    
+        int getSwordY(){
+            return 0;
         }
     
 };

@@ -43,7 +43,7 @@ class TileMap {
         return tileMap[pMapPosY][pMapPosX].getY();
     }
     
-    // Funkt net so richtig
+    // Funkt
     int getTileState(int pMapPosX, int pMapPosY){
         int z = tileMap[pMapPosY][pMapPosX].getState();
         return z;
@@ -84,6 +84,36 @@ class TileMap {
         }
     }
     
+    int getSwordBoardX(int pMapPosX, int pMapPosY, int pDirec) {
+        switch(pDirec) {
+            case 0:
+                return pMapPosX;
+            case 1:
+                return pMapPosX - 1;
+            case 2:
+                return pMapPosX;
+            case 3:
+                return pMapPosX + 1;
+            default:
+                return 0;
+        }
+    }
+    
+    int getSwordBoardY(int pMapPosX, int pMapPosY, int pDirec) {
+        switch(pDirec) {
+            case 0:
+                return pMapPosY - 1;
+            case 1:
+                return pMapPosY;
+            case 2:
+                return pMapPosY + 1;
+            case 3:
+                return pMapPosY;
+            default:
+                return 0;
+        }
+    }
+    
     int getTileStateUp(int pMapPosX, int pMapPosY) {
         return tileMap[pMapPosY - 1][pMapPosX].getState();
     }
@@ -99,4 +129,35 @@ class TileMap {
     int getTileStateRight(int pMapPosX, int pMapPosY) {
         return tileMap[pMapPosY][pMapPosX + 1].getState();
     }
+    
+    int swordHit(int pMapPosX, int pMapPosY, int pDirec){
+        switch(pDirec) {
+            case 0:
+                if(getTileStateUp(pMapPosX, pMapPosY) == 2){
+                    return 1;
+                } else {
+                    return 0; 
+                }
+            case 1:
+                if(getTileStateLeft(pMapPosX, pMapPosY) == 2){
+                    return 1;
+                } else {
+                    return 0;
+                }
+            case 2:
+                if(getTileStateDown(pMapPosX, pMapPosY) == 2){
+                   return 1; 
+                } else {
+                   return 0; 
+                }
+            case 3:
+                if(getTileStateRight(pMapPosX, pMapPosY) == 2){
+                   return 1;
+                } else {
+                   return 0;
+                }
+            default:
+                return 0;
+        }
+    }   
 };

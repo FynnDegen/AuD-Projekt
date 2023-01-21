@@ -1,4 +1,5 @@
 #include "Ped.hpp"
+#include <cmath>
 
 class Enemy{
     private:
@@ -6,10 +7,10 @@ class Enemy{
         int attDmg;
         int attSpd;
     
-        int mapPosX;
-        int mapPosY;
-        int x;
-        int y;
+        int mapPosX; // Schachbrettkoordinate
+        int mapPosY; // Schachbrettkoordinate
+        int x; // "normale" Koordinate
+        int y; // "normale" Koordinate
         int direc;
     
         SVG *canvas;
@@ -69,6 +70,9 @@ class Enemy{
             }
         }
     
+        void autoMove(){
+            
+        }    
     
         int getHP() {
             return hp;
@@ -101,4 +105,13 @@ class Enemy{
         void setY(int pY) {
             y = pY;
         }
+
+        int getBoardX(){
+           return mapPosX;
+        }
+    
+        int getBoardY(){
+           return mapPosY; 
+        }
+
 };
