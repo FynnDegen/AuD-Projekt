@@ -1,3 +1,5 @@
+//WICHTIG! Player einen Wert auf tileMap geben, wie der gegener auch, also mit setState. Super
+
 class Player{
     private:
         int hp;
