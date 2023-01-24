@@ -1,3 +1,11 @@
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
+#include "sprite.hpp"
+#endif
+
+#ifndef PED_HPP
+#define PED_HPP
+
 class Ped {
     private:
         int hp;
@@ -9,18 +17,12 @@ class Ped {
         int direc;
         int mapPosX;
         int mapPosY;
-    
-        Image* playerUp;
-        Image* playerLeft;
-        Image* playerDown;
-        Image* playerRight;
+  
         SVG *canvas;
-        Image enemy1;
-        
     
     
     public:
-        Ped(){
+        Ped() {
             
         }
     
@@ -110,3 +112,4 @@ class Ped {
             mapPosY = pMapPosY;
         }
 };
+#endif

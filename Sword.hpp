@@ -1,8 +1,10 @@
+#include "enemylist.hpp"
+
+#ifndef SWORD_HPP
+#define SWORD_HPP
+
 class Sword {
     private:
-        int dmg;
-        int spd;
-
         int mapPosX;
         int mapPosY;
     
@@ -19,12 +21,14 @@ class Sword {
             sword.hide();
             mapPosX = pX;
             mapPosY = pY;
-            dmg = 10;
         }
-    
-        void melee() {
+
+        void melee(EnemyList &pEnemyList) {
             sword.show();
-            AlgoViz::sleep(300);
+            Enemy *enemy = pEnemyList.enemyOnTile(mapPosX, mapPosY);
+            if(enemy != nullptr) {
+                enemy -> moveDown();
+            }
             sword.hide();
         }
     
@@ -33,8 +37,5 @@ class Sword {
             mapPosX = pX;
             mapPosY = pY;
         }
-    
-        int getDmg(){
-            return dmg;   
-        }
 };
+#endif

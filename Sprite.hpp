@@ -1,3 +1,8 @@
+#include <algoviz/SVG.hpp>
+
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
+
 class Sprite {
     private:
         Image pedUp, pedLeft, pedDown, pedRight;
@@ -45,3 +50,4 @@ class Sprite {
             }
         }
 };
+#endif

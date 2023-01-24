@@ -1,5 +1,13 @@
 //WICHTIG! Player einen Wert auf tileMap geben, wie der gegener auch, also mit setState. Super
 
+#include <algoviz/SVG.hpp>
+#include "enemylist.hpp"
+#include "sprite.hpp"
+#include "sword.hpp"
+
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
+
 class Player{
     private:
         int hp;
@@ -12,92 +20,92 @@ class Player{
     
         SVG *canvas;
         TileMap *tileMap;
+        EnemyList *enemyList;
         
         Sprite sprite;
-        Sword sword;
+        //Sword sword;
+        Image testSword;
     
     public:
         Player(){
             
         }
     
-        Player(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas){
+        Player(int pMapPosX, int pMapPosY, TileMap *tileMap, EnemyList *pEnemyList, SVG *canvas) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
             this -> canvas = canvas;
             this -> tileMap = tileMap;
+            enemyList = pEnemyList;
             
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/PlayerUp.png", "gfx/PlayerLeft.png",  "gfx/PlayerDown.png", "gfx/PlayerRight.png");
             
-            sword = Sword(tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), canvas);
+            //sword = Sword(tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), canvas);
+            testSword = Image("gfx/bild.png", tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), 100, 100, canvas);
         }
     
-        void keyMovement(string pKey, int &pHitStatus, int &pSwordX, int &pSwordY){
+        void keyMovement(string pKey, EnemyList *pEnemyList){
             if(pKey == "w"){
                 sprite.toFront(0);
                 direc = 0;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
                 if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0){
                     mapPosY--;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                    sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
+                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
                 }
             } else if(pKey == "a"){
                 sprite.toFront(1);
                 direc = 1;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
                 if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0){
                     mapPosX--;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY)); 
-                    sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
+                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
                 }
             } else if(pKey == "s"){
                 sprite.toFront(2);
                 direc = 2;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
                 if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0){
                     mapPosY++;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                    sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
+                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
                 }
             } else if(pKey == "d"){
                 sprite.toFront(3);
                 direc = 3;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
                 if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0){
                     mapPosX++;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                    sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
+                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
                 }
-            }else if(pKey == "q") {
-                sword.melee();
-                if (tileMap -> swordHit(mapPosX, mapPosY, direc) == 1){
-                    pHitStatus = 1;
-                    pSwordX = tileMap -> getSwordBoardX(mapPosX, mapPosY, direc);
-                    pSwordY = tileMap -> getSwordBoardY(mapPosX, mapPosY, direc);
+            } else if(pKey == "q") {
+                testSword.moveTo(tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc));
+                Enemy *enemy = enemyList -> enemyOnTile(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
+                if(enemy == nullptr) {
+                    testSword.moveTo(1000, 1000);
                 } else {
-                    pHitStatus = 0;
-                    pSwordX = 0;
-                    pSwordY = 0;
+                    testSword.moveTo(100, 100);
+                    enemy -> moveDown();
                 }
-                
-                
-            }else if(pKey == "ArrowUp") {
+            } else if(pKey == "ArrowUp") {
                 sprite.toFront(0);
                 direc = 0;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
             } else if(pKey == "ArrowLeft") {
                 sprite.toFront(1);
                 direc = 1;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
             } else if(pKey == "ArrowDown") {
                 sprite.toFront(2);
                 direc = 2;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
             } else if(pKey == "ArrowRight") {
                 sprite.toFront(3);
                 direc = 3;
-                sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
+                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
             }
         }
     
@@ -117,6 +125,14 @@ class Player{
             attDmg = pAttDmg;
         }
     
+        int getMapPosX() {
+            return mapPosX;
+        }
+    
+        int getMapPosY() {
+            return mapPosY;
+        }
+    
         // Brauchen wir, weil nur Player das Schwert kennt
         int getSwordX(){
             return 0;
@@ -127,3 +143,4 @@ class Player{
         }
     
 };
+#endif

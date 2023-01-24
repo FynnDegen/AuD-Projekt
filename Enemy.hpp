@@ -1,7 +1,9 @@
-#include "Ped.hpp"
-#include <cmath>
+#include "sprite.hpp"
 
-class Enemy{
+#ifndef ENEMY_HPP
+#define ENEMY_HPP
+
+class Enemy {
     private:
         int hp;
         int attDmg;
@@ -19,11 +21,11 @@ class Enemy{
         Sprite sprite;
     
     public:
-        Enemy(){
+        Enemy() {
         
         }
     
-        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas){
+        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
             this -> canvas = canvas;
@@ -106,12 +108,13 @@ class Enemy{
             y = pY;
         }
 
-        int getBoardX(){
+        int getMapPosX(){
            return mapPosX;
         }
     
-        int getBoardY(){
+        int getMapPosY(){
            return mapPosY; 
         }
 
 };
+#endif
