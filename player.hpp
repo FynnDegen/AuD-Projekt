@@ -4,13 +4,14 @@
 #include "enemylist.hpp"
 #include "sprite.hpp"
 #include "sword.hpp"
+#include <string>
 
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
 class Player{
     private:
-        int hp;
+        int hp = 100;
         int attDmg = 10;
         int attSpd;
     
@@ -25,6 +26,8 @@ class Player{
         Sprite sprite;
         //Sword sword;
         Image testSword;
+        // rudimentäres Textfeld fuers Leben
+        Text health;
     
     public:
         Player(){
@@ -42,6 +45,9 @@ class Player{
             
             //sword = Sword(tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), canvas);
             testSword = Image("gfx/bild.png", tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), 100, 100, canvas);
+            
+            health = Text(to_string(hp), 100, 1550, canvas); 
+            health.setAttribute("stroke", 15); // wie geht das groeßer?
         }
     
         void keyMovement(string pKey, EnemyList *pEnemyList){
@@ -88,12 +94,12 @@ class Player{
                     testSword.moveTo(1000, 1000);
                     enemy -> setHP(enemy -> getHP() - attDmg);
                     
-                    //std::cout << enemy << std::endl;
-                    
                     if (enemy -> getHP() <= 0){
                         enemyList -> deleteEnemy(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
                     }
-                } 
+                } else {
+                   testSword.moveTo(1000, 1000); 
+                }
             } else if(pKey == "ArrowUp") {
                 sprite.toFront(0);
                 direc = 0;

@@ -14,6 +14,8 @@ class Enemy {
         int x; // "normale" Koordinate
         int y; // "normale" Koordinate
         int direc;
+        
+        bool moved = false;
     
         SVG *canvas;
         TileMap *tileMap;
@@ -42,6 +44,8 @@ class Enemy {
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosY--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                tileMap -> setState(mapPosX, mapPosY, 2);
+                moved = true;
             }
         }
     
@@ -51,6 +55,7 @@ class Enemy {
                 mapPosX--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
+                moved = true;
             }
         }
     
@@ -60,6 +65,7 @@ class Enemy {
                 mapPosY++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
+                moved = true;
             }
         }
     
@@ -69,11 +75,31 @@ class Enemy {
                 mapPosX++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
+                moved = true;
             }
         }
     
         void autoMove(){
-            
+            while(!moved){
+                int d = rand() % 3;
+                switch(d) {
+                    case 0:
+                        moveUp();
+                        break;
+                    case 1:
+                        moveLeft();
+                        break;
+                    case 2:
+                        moveDown();
+                        break;
+                    case 3:
+                        moveRight();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            moved = false;
         }    
     
         int getHP() {
@@ -115,6 +141,10 @@ class Enemy {
         int getMapPosY(){
            return mapPosY; 
         }
-
+        
+        // wird beim Löschen aufgerufen, damit das Tile auf dem der steht wieder den Tag 0 bekommt
+        void adios(){
+           tileMap -> setState(mapPosX, mapPosY, 0);
+        }
 };
 #endif

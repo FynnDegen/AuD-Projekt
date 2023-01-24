@@ -1,7 +1,6 @@
 #include "enemy.hpp"
 #include <algoviz/SVG.hpp>
 #include <vector>
-#include <iostream> //nur fürs Testen. Am Ende löschen
 
 #ifndef ENEMYLIST_HPP
 #define ENEMYLIST_HPP
@@ -36,15 +35,14 @@ class EnemyList {
             
         }
     
+        // löscht den getoeteten Enemy aus dem Vector
         void deleteEnemy(int pPosX, int pPosY){
-            // zum Testen. Am Ende löschen
-            int k = 0;
             for(int i = 0; i < enemyList.size(); i++) {
                 if (enemyList[i].getMapPosX() == pPosX && enemyList[i].getMapPosY() == pPosY) {
-                    k = i;
+                    enemyList[i].adios();
+                    enemyList.erase(enemyList.begin() + i);
                 }
             }
-            enemyList.erase(k);
         }
 };
 #endif
