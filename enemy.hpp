@@ -5,7 +5,7 @@
 
 class Enemy {
     private:
-        int hp;
+        int hp = 25;
         int attDmg;
         int attSpd;
     

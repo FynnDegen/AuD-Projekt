@@ -1,5 +1,7 @@
 #include "enemy.hpp"
 #include <algoviz/SVG.hpp>
+#include <vector>
+#include <iostream> //nur fürs Testen. Am Ende löschen
 
 #ifndef ENEMYLIST_HPP
 #define ENEMYLIST_HPP
@@ -7,6 +9,7 @@
 class EnemyList {
     private:
         vector<Enemy> enemyList;
+        vector<Enemy>::iterator it = enemyList.begin();
     
     public:
         EnemyList() {
@@ -14,7 +17,6 @@ class EnemyList {
         }
 
         EnemyList(TileMap *tileMap, SVG *canvas) {
-            enemyList.begin();
                 enemyList.push_back(Enemy(12, 2, tileMap, canvas));
                 enemyList.push_back(Enemy(5, 9, tileMap, canvas));
                 enemyList.push_back(Enemy(2, 2, tileMap, canvas));
@@ -22,28 +24,27 @@ class EnemyList {
         }
     
         Enemy *enemyOnTile(int pMapPosX, int pMapPosY) {
-            /*
-            vector<Enemy>::iterator it;
-            
-            for(it = enemyList.begin(); it != enemyList.end(); it++) {
-                if(it -> getMapPosX() == pMapPosX && it -> getMapPosY() == pMapPosY) {
-                    return &it;
-                }
-            }
-            return nullptr;
-            */
-            
             for(int i = 0; i < enemyList.size(); i++) {
                 if(enemyList[i].getMapPosX() == pMapPosX && enemyList[i].getMapPosY() == pMapPosY) {
                     return &enemyList[i];
                 }
             }
-            return nullptr;
-            
+            return nullptr;        
         }
     
         void damageEnemy() {
             
+        }
+    
+        void deleteEnemy(int pPosX, int pPosY){
+            // zum Testen. Am Ende löschen
+            int k = 0;
+            for(int i = 0; i < enemyList.size(); i++) {
+                if (enemyList[i].getMapPosX() == pPosX && enemyList[i].getMapPosY() == pPosY) {
+                    k = i;
+                }
+            }
+            enemyList.erase(k);
         }
 };
 #endif

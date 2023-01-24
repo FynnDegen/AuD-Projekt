@@ -1,4 +1,4 @@
-//WICHTIG! Player einen Wert auf tileMap geben, wie der gegener auch, also mit setState. Super
+//WICHTIG! Player einen Wert auf tileMap geben, wie der gegener auch, also mit setState. Gemacht
 
 #include <algoviz/SVG.hpp>
 #include "enemylist.hpp"
@@ -11,7 +11,7 @@
 class Player{
     private:
         int hp;
-        int attDmg;
+        int attDmg = 10;
         int attSpd;
     
         int mapPosX;
@@ -48,48 +48,52 @@ class Player{
             if(pKey == "w"){
                 sprite.toFront(0);
                 direc = 0;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
+                tileMap -> setState(mapPosX, mapPosY, 0);
                 if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0){
                     mapPosY--;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
                 }
+                tileMap -> setState(mapPosX, mapPosY, 3);
             } else if(pKey == "a"){
                 sprite.toFront(1);
                 direc = 1;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
+                tileMap -> setState(mapPosX, mapPosY, 0);
                 if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0){
                     mapPosX--;
-                    sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY)); 
-                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
+                    sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));         
                 }
+                tileMap -> setState(mapPosX, mapPosY, 3);
             } else if(pKey == "s"){
                 sprite.toFront(2);
                 direc = 2;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
+                tileMap -> setState(mapPosX, mapPosY, 0);
                 if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0){
                     mapPosY++;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
                 }
+                tileMap -> setState(mapPosX, mapPosY, 3);
             } else if(pKey == "d"){
                 sprite.toFront(3);
                 direc = 3;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
+                tileMap -> setState(mapPosX, mapPosY, 0);
                 if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0){
                     mapPosX++;
                     sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                    //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
                 }
+                tileMap -> setState(mapPosX, mapPosY, 3);
             } else if(pKey == "q") {
                 testSword.moveTo(tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc));
                 Enemy *enemy = enemyList -> enemyOnTile(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
-                if(enemy == nullptr) {
+                if(enemy != nullptr) {
                     testSword.moveTo(1000, 1000);
-                } else {
-                    testSword.moveTo(100, 100);
-                    enemy -> moveDown();
-                }
+                    enemy -> setHP(enemy -> getHP() - attDmg);
+                    
+                    //std::cout << enemy << std::endl;
+                    
+                    if (enemy -> getHP() <= 0){
+                        enemyList -> deleteEnemy(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
+                    }
+                } 
             } else if(pKey == "ArrowUp") {
                 sprite.toFront(0);
                 direc = 0;
