@@ -1,7 +1,4 @@
-#ifndef ALGOVIZ_SVG_HPP
-#define ALGOVIZ_SVG_HPP
 #include <algoviz/SVG.hpp>
-#endif
 
 #ifndef TILE_HPP
 #define TILE_HPP

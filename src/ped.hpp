@@ -1,7 +1,4 @@
-#ifndef SPRITE_HPP
-#define SPRITE_HPP
 #include "sprite.hpp"
-#endif
 
 #ifndef PED_HPP
 #define PED_HPP
