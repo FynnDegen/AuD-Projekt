@@ -169,7 +169,7 @@ class Player{
         }
     
         void setScore(int pScore){
-            score = pScore;
+            score += pScore;
             points.setText("SCORE: " + to_string(hp));
         }
 };
