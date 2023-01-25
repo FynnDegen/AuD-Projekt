@@ -47,7 +47,7 @@ class Player{
             sword.hide();
             
             health = Text(to_string(hp), 100, 1550, canvas); 
-            health.setAttribute("stroke", 15); // wie geht das groeßer?
+            health.setAttribute("font-size", 50); // wie geht das groeßer?
         }
     
         void keyMovement(string pKey, EnemyList *pEnemyList){
@@ -121,6 +121,7 @@ class Player{
 
         void setHP(int pHP) {
             hp = pHP;
+            health.setText(to_string(hp));
         }
 
         int getAttDmg() {

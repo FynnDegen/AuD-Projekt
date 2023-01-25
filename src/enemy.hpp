@@ -7,7 +7,7 @@
 class Enemy {
     private:
         int hp = 25;
-        int attDmg;
+        int attDmg = 10;
         int attSpd;
     
         int mapPosX; // Schachbrettkoordinate
@@ -40,58 +40,71 @@ class Enemy {
             
         }
     
-        void moveUp(){
+        int moveUp(){
             if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0){
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosY--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
+                return 0;
+            } else if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 3){
+                return attDmg;
             }
+            return 0;
         }
     
-        void moveLeft(){
+        int moveLeft(){
             if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0){
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosX--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
+                return 0;
+            } else if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 3){
+                return attDmg;
             }
+            return 0;
         }
     
-        void moveDown(){
+        int moveDown(){
             if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0){
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosY++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
+                return 0;
+            } else if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 3){
+                return attDmg;
             }
+            return 0;
         }
     
-        void moveRight(){
+        int moveRight(){
             if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0){
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosX++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
+                return 0;
+            } else if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 3){
+                return attDmg;   
             }
+            return 0;
         }
     
-        void autoMove() {
+        int autoMove() {
                 switch(rand() % 4) {
                     case 0:
-                        moveUp();
-                        break;
+                        return moveUp();
                     case 1:
-                        moveLeft();
+                        return moveLeft();
                         break;
                     case 2:
-                        moveDown();
-                        break;
+                        return moveDown();
                     case 3:
-                        moveRight();
-                        break;
+                        return moveRight();
                     default:
-                        break;
+                        return 0;
                 }
         }    
     

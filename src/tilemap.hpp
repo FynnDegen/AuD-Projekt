@@ -66,13 +66,13 @@ class TileMap {
         int getSwordPosX(int pMapPosX, int pMapPosY, int pDirec) {
             switch(pDirec) {
                 case 0:
-                    return tileMap[pMapPosY - 1][pMapPosX].getX();
+                    return tileMap[pMapPosY - 1][pMapPosX].getX() - 50;
                 case 1:
-                    return tileMap[pMapPosY][pMapPosX - 1].getX();
+                    return tileMap[pMapPosY][pMapPosX - 1].getX() - 50;
                 case 2:
-                    return tileMap[pMapPosY + 1][pMapPosX].getX();
+                    return tileMap[pMapPosY + 1][pMapPosX].getX() - 50;
                 case 3:
-                    return tileMap[pMapPosY][pMapPosX + 1].getX();
+                    return tileMap[pMapPosY][pMapPosX + 1].getX() - 50;
                 default:
                     return 0;
             }
@@ -81,13 +81,13 @@ class TileMap {
         int getSwordPosY(int pMapPosX, int pMapPosY, int pDirec) {
             switch(pDirec) {
                 case 0:
-                    return tileMap[pMapPosY - 1][pMapPosX].getY();
+                    return tileMap[pMapPosY - 1][pMapPosX].getY() - 50;
                 case 1:
-                    return tileMap[pMapPosY][pMapPosX - 1].getY();
+                    return tileMap[pMapPosY][pMapPosX - 1].getY() - 50;
                 case 2:
-                    return tileMap[pMapPosY + 1][pMapPosX].getY();
+                    return tileMap[pMapPosY + 1][pMapPosX].getY() - 50;
                 case 3:
-                    return tileMap[pMapPosY][pMapPosX + 1].getY();
+                    return tileMap[pMapPosY][pMapPosX + 1].getY() - 50;
                 default:
                     return 0;
             }

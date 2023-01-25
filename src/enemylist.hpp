@@ -48,5 +48,9 @@ class EnemyList {
         Enemy * getEnemy(int i) {
             return &enemyList[i];
         }
+    
+        int getSize(){
+            return enemyList.size(); 
+        }
 };
 #endif
