@@ -156,8 +156,8 @@ class Player{
         }
 
         void setAttDmg(int pAttDmg) {
-            attDmg = pAttDmg;
-            dmg.setText("DMG: " + to_string(hp));
+            attDmg += pAttDmg;
+            dmg.setText("DMG: " + to_string(attDmg));
         }
     
         int getMapPosX() {
@@ -169,8 +169,8 @@ class Player{
         }
     
         void setScore(int pScore){
-            score = pScore;
-            points.setText("SCORE: " + to_string(hp));
+            score += pScore;
+            points.setText("SCORE: " + to_string(score));
         }
 };
 #endif
