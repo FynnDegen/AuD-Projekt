@@ -1,4 +1,5 @@
 #include "sprite.hpp"
+#include <cstdlib>
 
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
@@ -14,8 +15,6 @@ class Enemy {
         int x; // "normale" Koordinate
         int y; // "normale" Koordinate
         int direc;
-        
-        bool moved = false;
     
         SVG *canvas;
         TileMap *tileMap;
@@ -37,6 +36,8 @@ class Enemy {
             
             tileMap -> setState(mapPosX, mapPosY, 2);
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/EnemyUp.png", "gfx/EnemyLeft.png",  "gfx/EnemyDown.png", "gfx/EnemyRight.png");
+            
+            
         }
     
         void moveUp(){
@@ -45,7 +46,6 @@ class Enemy {
                 mapPosY--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
-                moved = true;
             }
         }
     
@@ -55,7 +55,6 @@ class Enemy {
                 mapPosX--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
-                moved = true;
             }
         }
     
@@ -65,7 +64,6 @@ class Enemy {
                 mapPosY++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
-                moved = true;
             }
         }
     
@@ -75,14 +73,11 @@ class Enemy {
                 mapPosX++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
-                moved = true;
             }
         }
     
-        void autoMove(){
-            while(!moved){
-                int d = rand() % 3;
-                switch(d) {
+        void autoMove() {
+                switch(rand() % 4) {
                     case 0:
                         moveUp();
                         break;
@@ -98,8 +93,6 @@ class Enemy {
                     default:
                         break;
                 }
-            }
-            moved = false;
         }    
     
         int getHP() {
@@ -146,5 +139,6 @@ class Enemy {
         void adios(){
            tileMap -> setState(mapPosX, mapPosY, 0);
         }
+    
 };
 #endif

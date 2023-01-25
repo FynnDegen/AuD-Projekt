@@ -24,8 +24,7 @@ class Player{
         EnemyList *enemyList;
         
         Sprite sprite;
-        //Sword sword;
-        Image testSword;
+        Image sword;
         // rudimentäres Textfeld fuers Leben
         Text health;
     
@@ -40,11 +39,12 @@ class Player{
             this -> canvas = canvas;
             this -> tileMap = tileMap;
             enemyList = pEnemyList;
+            direc = 3;
             
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/PlayerUp.png", "gfx/PlayerLeft.png",  "gfx/PlayerDown.png", "gfx/PlayerRight.png");
             
-            //sword = Sword(tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), canvas);
-            testSword = Image("gfx/bild.png", tileMap -> getTilePosX(mapPosX + 1, mapPosY), tileMap -> getTilePosY(mapPosX + 1, mapPosY), 100, 100, canvas);
+            sword = Image("gfx/bild.png", tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc), 100, 100, canvas);
+            sword.hide();
             
             health = Text(to_string(hp), 100, 1550, canvas); 
             health.setAttribute("stroke", 15); // wie geht das groeßer?
@@ -88,34 +88,30 @@ class Player{
                 }
                 tileMap -> setState(mapPosX, mapPosY, 3);
             } else if(pKey == "q") {
-                testSword.moveTo(tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc));
+                sword.moveTo(tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc));
+                sword.show();
                 Enemy *enemy = enemyList -> enemyOnTile(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
                 if(enemy != nullptr) {
-                    testSword.moveTo(1000, 1000);
                     enemy -> setHP(enemy -> getHP() - attDmg);
                     
                     if (enemy -> getHP() <= 0){
                         enemyList -> deleteEnemy(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
                     }
-                } else {
-                   testSword.moveTo(1000, 1000); 
                 }
+                AlgoViz::sleep(200);
+                sword.hide();
             } else if(pKey == "ArrowUp") {
                 sprite.toFront(0);
                 direc = 0;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 0), tileMap -> getSwordPosY(mapPosX, mapPosY, 0));
             } else if(pKey == "ArrowLeft") {
                 sprite.toFront(1);
                 direc = 1;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 1), tileMap -> getSwordPosY(mapPosX, mapPosY, 1));
             } else if(pKey == "ArrowDown") {
                 sprite.toFront(2);
                 direc = 2;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 2), tileMap -> getSwordPosY(mapPosX, mapPosY, 2));
             } else if(pKey == "ArrowRight") {
                 sprite.toFront(3);
                 direc = 3;
-                //sword.moveSword(tileMap -> getSwordPosX(mapPosX, mapPosY, 3), tileMap -> getSwordPosY(mapPosX, mapPosY, 3));
             }
         }
     
@@ -142,15 +138,5 @@ class Player{
         int getMapPosY() {
             return mapPosY;
         }
-    
-        // Brauchen wir, weil nur Player das Schwert kennt
-        int getSwordX(){
-            return 0;
-        }
-    
-        int getSwordY(){
-            return 0;
-        }
-    
 };
 #endif

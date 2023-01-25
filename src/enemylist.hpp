@@ -44,5 +44,9 @@ class EnemyList {
                 }
             }
         }
+    
+        Enemy * getEnemy(int i) {
+            return &enemyList[i];
+        }
 };
 #endif
