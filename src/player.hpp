@@ -3,7 +3,6 @@
 #include <algoviz/SVG.hpp>
 #include "enemylist.hpp"
 #include "sprite.hpp"
-#include "sword.hpp"
 #include <string>
 
 #ifndef PLAYER_HPP
@@ -11,9 +10,11 @@
 
 class Player{
     private:
-        int hp = 100;
+        int hp = 10;
         int attDmg = 10;
         int attSpd;
+    
+        int score = 0;
     
         int mapPosX;
         int mapPosY;
@@ -25,8 +26,13 @@ class Player{
         
         Sprite sprite;
         Image sword;
+        Rect dead;
+    
         // rudimentäres Textfeld fuers Leben
         Text health;
+        Text dmg;
+        Text points;
+        Text deadText;
     
     public:
         Player(){
@@ -41,13 +47,27 @@ class Player{
             enemyList = pEnemyList;
             direc = 3;
             
+            dead = Rect(0, 0, 1500, 1500, canvas);
+            dead.hide();
+            dead.setFill(176, 30, 30, 0.6);
+            
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/PlayerUp.png", "gfx/PlayerLeft.png",  "gfx/PlayerDown.png", "gfx/PlayerRight.png");
             
             sword = Image("gfx/bild.png", tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc), 100, 100, canvas);
             sword.hide();
             
-            health = Text(to_string(hp), 100, 1550, canvas); 
-            health.setAttribute("font-size", 50); // wie geht das groeßer?
+            health = Text("HP: " + to_string(hp), 100, 1570, canvas); 
+            health.setAttribute("font-size", 50); 
+            dmg = Text("DMG: " + to_string(attDmg), 600, 1570, canvas); 
+            dmg.setAttribute("font-size", 50);
+            points = Text("SCORE: " + to_string(score), 1100, 1570, canvas); 
+            points.setAttribute("font-size", 50);
+            deadText = Text("REBOOTING...", 500, 750, canvas); 
+            deadText.setAttribute("font-size", 80);
+            deadText.setAttribute("font-stroke", 7);
+            deadText.setFill("white");
+            deadText.setColor("white");
+            deadText.hide();
         }
     
         void keyMovement(string pKey, EnemyList *pEnemyList){
@@ -121,7 +141,14 @@ class Player{
 
         void setHP(int pHP) {
             hp = pHP;
-            health.setText(to_string(hp));
+            if (hp <= 0) {
+                dead.show();
+                dead.toFront();
+                deadText.show();
+                deadText.toFront();
+                hp = 0;
+            }
+            health.setText("HP: " + to_string(hp));
         }
 
         int getAttDmg() {
@@ -130,6 +157,7 @@ class Player{
 
         void setAttDmg(int pAttDmg) {
             attDmg = pAttDmg;
+            dmg.setText("DMG: " + to_string(hp));
         }
     
         int getMapPosX() {
@@ -138,6 +166,11 @@ class Player{
     
         int getMapPosY() {
             return mapPosY;
+        }
+    
+        void setScore(int pScore){
+            score = pScore;
+            points.setText("SCORE: " + to_string(hp));
         }
 };
 #endif

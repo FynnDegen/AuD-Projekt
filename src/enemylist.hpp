@@ -31,10 +31,6 @@ class EnemyList {
             return nullptr;        
         }
     
-        void damageEnemy() {
-            
-        }
-    
         // löscht den getoeteten Enemy aus dem Vector
         void deleteEnemy(int pPosX, int pPosY){
             for(int i = 0; i < enemyList.size(); i++) {
