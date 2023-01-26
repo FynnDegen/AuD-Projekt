@@ -33,7 +33,9 @@ class Tile {
             this -> mapY = mapY;
 
             if(state == 1) {
-                tile = Image("gfx/wallFinal.png",posX + 50, posY + 50, 100, 100, field);
+                tile = Image("gfx/wall.png",posX + 50, posY + 50, 100, 100, field);
+            } else if(state == 5) {
+                tile = Image("gfx/bild.png", posX + 50, posY + 50, 100, 100, field);
             } else {
                 tile = Image("gfx/floor.png",posX + 50, posY + 50, 100, 100, field);
             }

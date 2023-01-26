@@ -40,53 +40,57 @@ class Enemy {
             
         }
     
-        int moveUp(){
-            if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0){
+        int moveUp() {
+            sprite.toFront(0);
+            if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0 || tileMap -> getTileStateUp(mapPosX, mapPosY) > 3) {
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosY--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
                 return 0;
-            } else if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 3){
+            } else if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 3) {
                 return attDmg;
             }
             return 0;
         }
     
-        int moveLeft(){
-            if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0){
+        int moveLeft() {
+            sprite.toFront(1);
+            if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0 || tileMap -> getTileStateLeft(mapPosX, mapPosY) > 3) {
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosX--;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
                 return 0;
-            } else if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 3){
+            } else if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 3) {
                 return attDmg;
             }
             return 0;
         }
     
-        int moveDown(){
-            if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0){
+        int moveDown() {
+            sprite.toFront(2);
+            if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0 || tileMap -> getTileStateDown(mapPosX, mapPosY) > 3) {
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosY++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
                 return 0;
-            } else if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 3){
+            } else if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 3) {
                 return attDmg;
             }
             return 0;
         }
     
-        int moveRight(){
-            if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0){
+        int moveRight() {
+            sprite.toFront(3);
+            if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0 || tileMap -> getTileStateRight(mapPosX, mapPosY) > 3) {
                 tileMap -> setState(mapPosX, mapPosY, 0);
                 mapPosX++;
                 sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
                 tileMap -> setState(mapPosX, mapPosY, 2);
                 return 0;
-            } else if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 3){
+            } else if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 3) {
                 return attDmg;   
             }
             return 0;

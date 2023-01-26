@@ -16,10 +16,7 @@ class EnemyList {
         }
 
         EnemyList(TileMap *tileMap, SVG *canvas) {
-                enemyList.push_back(Enemy(12, 2, tileMap, canvas));
-                enemyList.push_back(Enemy(5, 9, tileMap, canvas));
-                enemyList.push_back(Enemy(2, 2, tileMap, canvas));
-                enemyList.push_back(Enemy(5, 7, tileMap, canvas));
+            generateEnemyList(tileMap, canvas);
         }
     
         Enemy *enemyOnTile(int pMapPosX, int pMapPosY) {
@@ -47,6 +44,17 @@ class EnemyList {
     
         int getSize(){
             return enemyList.size(); 
+        }
+    
+        void generateEnemyList(TileMap *tileMap, SVG *canvas) {
+            for(int i = 0; i < 4; i++) {
+                Tile *tile = tileMap -> getRandomFreeTile();
+                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas));
+            }
+        }
+    
+        void clearEnemyList() {
+            enemyList.clear();
         }
 };
 #endif

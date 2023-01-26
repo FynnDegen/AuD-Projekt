@@ -8,9 +8,9 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
-class Player{
+class Player {
     private:
-        int hp = 10;
+        int hp = 100;
         int attDmg = 10;
         int attSpd;
     
@@ -35,23 +35,25 @@ class Player{
         Text deadText;
     
     public:
-        Player(){
+        Player() {
             
         }
     
-        Player(int pMapPosX, int pMapPosY, TileMap *tileMap, EnemyList *pEnemyList, SVG *canvas) {
+        Player(int pMapPosX, int pMapPosY, TileMap *pTileMap, EnemyList *pEnemyList, SVG *pCanvas) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
-            this -> canvas = canvas;
-            this -> tileMap = tileMap;
+            canvas = pCanvas;
+            tileMap = pTileMap;
             enemyList = pEnemyList;
             direc = 3;
+            
+            tileMap -> setState(mapPosX, mapPosY, 3);
             
             dead = Rect(0, 0, 1500, 1500, canvas);
             dead.hide();
             dead.setFill(176, 30, 30, 0.6);
             
-            sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/PlayerUp.png", "gfx/PlayerLeft.png",  "gfx/PlayerDown.png", "gfx/PlayerRight.png");
+            sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/playerup.png", "gfx/playerleft.png",  "gfx/playerdown.png", "gfx/playerright.png");
             
             sword = Image("gfx/bild.png", tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc), 100, 100, canvas);
             sword.hide();
@@ -70,45 +72,18 @@ class Player{
             deadText.hide();
         }
     
-        void keyMovement(string pKey, EnemyList *pEnemyList){
-            if(pKey == "w"){
-                sprite.toFront(0);
-                direc = 0;
-                tileMap -> setState(mapPosX, mapPosY, 0);
-                if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0){
-                    mapPosY--;
-                    sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                }
-                tileMap -> setState(mapPosX, mapPosY, 3);
-            } else if(pKey == "a"){
-                sprite.toFront(1);
-                direc = 1;
-                tileMap -> setState(mapPosX, mapPosY, 0);
-                if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0){
-                    mapPosX--;
-                    sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));         
-                }
-                tileMap -> setState(mapPosX, mapPosY, 3);
-            } else if(pKey == "s"){
-                sprite.toFront(2);
-                direc = 2;
-                tileMap -> setState(mapPosX, mapPosY, 0);
-                if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0){
-                    mapPosY++;
-                    sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                }
-                tileMap -> setState(mapPosX, mapPosY, 3);
-            } else if(pKey == "d"){
-                sprite.toFront(3);
-                direc = 3;
-                tileMap -> setState(mapPosX, mapPosY, 0);
-                if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0){
-                    mapPosX++;
-                    sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
-                }
-                tileMap -> setState(mapPosX, mapPosY, 3);
+        void keyMovement(string pKey, EnemyList *pEnemyList) {
+            if(pKey == "w") {
+                movePlayer(0);
+            } else if(pKey == "a") {
+                movePlayer(1);
+            } else if(pKey == "s") {
+                movePlayer(2);
+            } else if(pKey == "d") {
+                movePlayer(3);
             } else if(pKey == "q") {
                 sword.moveTo(tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc));
+                sword.toFront();
                 sword.show();
                 Enemy *enemy = enemyList -> enemyOnTile(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
                 if(enemy != nullptr) {
@@ -116,22 +91,21 @@ class Player{
                     
                     if (enemy -> getHP() <= 0){
                         enemyList -> deleteEnemy(tileMap -> getSwordMapPosX(mapPosX, mapPosY, direc), tileMap -> getSwordMapPosY(mapPosX, mapPosY, direc));
+                        setScore(score + 25);
                     }
                 }
                 AlgoViz::sleep(200);
                 sword.hide();
             } else if(pKey == "ArrowUp") {
-                sprite.toFront(0);
-                direc = 0;
+                sprite.toFront(direc = 0);
             } else if(pKey == "ArrowLeft") {
-                sprite.toFront(1);
-                direc = 1;
+                sprite.toFront(direc = 1);
             } else if(pKey == "ArrowDown") {
-                sprite.toFront(2);
-                direc = 2;
+                sprite.toFront(direc = 2);
             } else if(pKey == "ArrowRight") {
-                sprite.toFront(3);
-                direc = 3;
+                sprite.toFront(direc = 3);
+            } else if(pKey == "e") {
+                tileMap -> generateTileMap();
             }
         }
     
@@ -168,9 +142,103 @@ class Player{
             return mapPosY;
         }
     
-        void setScore(int pScore){
+        void setScore(int pScore) {
             score = pScore;
-            points.setText("SCORE: " + to_string(hp));
+            points.setText("SCORE: " + to_string(score));
+        }
+    
+        void setPlayerOnMapPos(int pMapPosX, int pMapPosY) {
+            tileMap -> setState(mapPosX, mapPosY, 0);
+            mapPosX = pMapPosX;
+            mapPosY = pMapPosY;
+            sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+            tileMap -> setState(mapPosX, mapPosY, 3);
+        }
+    
+        void movePlayer(int pDirec) {
+            sprite.toFront(direc = pDirec);
+            switch(pDirec) {
+                case 0:
+                    if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 0) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosY--;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                    } else if(tileMap -> getTileStateUp(mapPosX, mapPosY) == 5) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosY--;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                        enemyList -> clearEnemyList();
+                        tileMap -> generateTileMap();
+                        Tile *tile = tileMap -> getRandomFreeTile();
+                        setPlayerOnMapPos(tile -> getMapX(), tile -> getMapY());
+                        enemyList -> generateEnemyList(tileMap, canvas);
+                        sprite.toFront(direc);
+                    }
+                    break;
+                case 1:
+                    if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 0) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosX--;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                    } else if(tileMap -> getTileStateLeft(mapPosX, mapPosY) == 5) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosX--;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                        enemyList -> clearEnemyList();
+                        tileMap -> generateTileMap();
+                        Tile *tile = tileMap -> getRandomFreeTile();
+                        setPlayerOnMapPos(tile -> getMapX(), tile -> getMapY());
+                        enemyList -> generateEnemyList(tileMap, canvas);
+                        sprite.toFront(direc);
+                    }
+                    break;
+                case 2:
+                    if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 0) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosY++;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                    } else if(tileMap -> getTileStateDown(mapPosX, mapPosY) == 5) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosY++;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                        enemyList -> clearEnemyList();
+                        tileMap -> generateTileMap();
+                        Tile *tile = tileMap -> getRandomFreeTile();
+                        setPlayerOnMapPos(tile -> getMapX(), tile -> getMapY());
+                        enemyList -> generateEnemyList(tileMap, canvas);
+                        sprite.toFront(direc);
+                    }
+                    break;
+                case 3:
+                    if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 0) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosX++;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                    } else if(tileMap -> getTileStateRight(mapPosX, mapPosY) == 5) {
+                        tileMap -> setState(mapPosX, mapPosY, 0);
+                        mapPosX++;
+                        sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+                        enemyList -> clearEnemyList();
+                        tileMap -> generateTileMap();
+                        Tile *tile = tileMap -> getRandomFreeTile();
+                        setPlayerOnMapPos(tile -> getMapX(), tile -> getMapY());
+                        enemyList -> generateEnemyList(tileMap, canvas);
+                        sprite.toFront(direc);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            tileMap -> setState(mapPosX, mapPosY, 3);
+        }
+    
+        void setUpNewTileMap() {
+            sprite.moveSprite(tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY));
+            enemyList -> clearEnemyList();
+            tileMap -> generateTileMap();
+            Tile *tile = tileMap -> getRandomFreeTile();
+            setPlayerOnMapPos(tile -> getMapX(), tile -> getMapY());
+            enemyList -> generateEnemyList(tileMap, canvas);
         }
 };
 #endif
