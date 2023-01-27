@@ -24,11 +24,14 @@ class Enemy {
         
         }
     
-        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas, int level) {
+        // abhaengig vom floor wird Leben und attDmg erhoeht
+        // mit kind wird der staerkere Gegner erzeugt (1=einfach, 2=staerker)
+        // staerkerer Gegner ist doppelt so stark
+        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas, int floor, int kind) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
-            hp = 20 + (5 * level); // mit jedem weiteren Lvl erhoeht sich das Leben um 5
-            attDmg = 9 + level;    // mit jedem weiteren Lvl erhoeht sich der attDmg um 1
+            hp = kind * (20 + (5 * floor)); // mit jedem weiteren Lvl erhoeht sich das Leben um 5
+            attDmg = kind * (9 + floor);    // mit jedem weiteren Lvl erhoeht sich der attDmg um 1
             this -> canvas = canvas;
             this -> tileMap = tileMap;
             

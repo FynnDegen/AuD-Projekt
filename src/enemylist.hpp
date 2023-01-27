@@ -9,6 +9,7 @@ class EnemyList {
     private:
         vector<Enemy> enemyList;
         vector<Enemy>::iterator it = enemyList.begin();
+        int kind = 1;
         int diff;
     
     public:
@@ -52,7 +53,7 @@ class EnemyList {
         void generateEnemyList(TileMap *tileMap, SVG *canvas, int lvl) {
             for(int i = 0; i < numberOfEnemys(); i++) {
                 Tile *tile = tileMap -> getRandomFreeTile();
-                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas, lvl));
+                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas, lvl, kind));
             }
         }
     
