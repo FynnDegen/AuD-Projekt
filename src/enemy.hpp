@@ -24,16 +24,16 @@ class Enemy {
         
         }
     
-        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas) {
+        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas, int level) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
+            hp = 20 + (5 * level); // mit jedem weiteren Lvl erhoeht sich das Leben um 5
+            attDmg = 9 + level;    // mit jedem weiteren Lvl erhoeht sich der attDmg um 1
             this -> canvas = canvas;
             this -> tileMap = tileMap;
             
             tileMap -> setState(mapPosX, mapPosY, 2);
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/EnemyUp.png", "gfx/EnemyLeft.png",  "gfx/EnemyDown.png", "gfx/EnemyRight.png");
-            
-            
         }
     
         int moveUp() {

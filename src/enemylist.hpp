@@ -18,7 +18,7 @@ class EnemyList {
 
         EnemyList(TileMap *tileMap, SVG *canvas, int difficult) {
             diff = difficult;
-            generateEnemyList(tileMap, canvas);
+            generateEnemyList(tileMap, canvas, 1);
         }
     
         Enemy *enemyOnTile(int pMapPosX, int pMapPosY) {
@@ -48,11 +48,11 @@ class EnemyList {
             return enemyList.size(); 
         }
     
-        // die 4 gegen ne Variable ändern.
-        void generateEnemyList(TileMap *tileMap, SVG *canvas) {
+
+        void generateEnemyList(TileMap *tileMap, SVG *canvas, int lvl) {
             for(int i = 0; i < numberOfEnemys(); i++) {
                 Tile *tile = tileMap -> getRandomFreeTile();
-                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas));
+                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas, lvl));
             }
         }
     
