@@ -13,7 +13,7 @@ class Menu{
         Text escText;
         int buttonCounter = 0;
         int menuCounter;
-        int diffSetting = 0;
+        int diffSetting = 0; // 0=einfach, 1=mittel, 2=schwer
         string lastKey;
         bool gameStart = false;
         SVG *canvas;
@@ -79,7 +79,7 @@ class Menu{
             button3Text.setAttribute("fill", "white");
             
             switch(diffSetting){
-                    
+                 // hier die int nutzen und entsprechend setzten   
                 case 0:
                     diffText = Text("Der Schwierigkeitsgrad ist auf LEICHT gesetzt.", 50, 1300, canvas);
                     diffText.setAttribute("font-size", 75);
@@ -226,7 +226,8 @@ class Menu{
     
         
     
-        bool getGameStart(){
+        bool getGameStart(int &difficult){
+           difficult = diffSetting; // Referenz mit int diff gleichsetzten
            return gameStart; 
         }
 };

@@ -9,13 +9,15 @@ class EnemyList {
     private:
         vector<Enemy> enemyList;
         vector<Enemy>::iterator it = enemyList.begin();
+        int diff;
     
     public:
         EnemyList() {
 
         }
 
-        EnemyList(TileMap *tileMap, SVG *canvas) {
+        EnemyList(TileMap *tileMap, SVG *canvas, int difficult) {
+            diff = difficult;
             generateEnemyList(tileMap, canvas);
         }
     
@@ -46,10 +48,28 @@ class EnemyList {
             return enemyList.size(); 
         }
     
+        // die 4 gegen ne Variable ändern.
         void generateEnemyList(TileMap *tileMap, SVG *canvas) {
-            for(int i = 0; i < 4; i++) {
+            for(int i = 0; i < numberOfEnemys(); i++) {
                 Tile *tile = tileMap -> getRandomFreeTile();
                 enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas));
+            }
+        }
+    
+        int numberOfEnemys(){
+            switch(diff){
+                case 0:
+                    return 4;
+                    
+                case 1:
+                    return 7;
+                    
+                case 2:
+                    return 10;
+                    
+                default:
+                    return 14; 
+                    // Wer meint da rumspielen zu müssen (idk wieso) der wird halt bestraft
             }
         }
     
