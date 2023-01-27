@@ -59,7 +59,7 @@ class Player {
             dead.hide();
             dead.setFill(176, 30, 30, 0.6);
             
-            sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/playerup.png", "gfx/playerleft.png",  "gfx/playerdown.png", "gfx/playerright.png");
+            sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/player/playerup.png", "gfx/player/playerleft.png",  "gfx/player/playerdown.png", "gfx/player/playerright.png");
             
             sword = Image("gfx/bild.png", tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc), 100, 100, canvas);
             sword.hide();
