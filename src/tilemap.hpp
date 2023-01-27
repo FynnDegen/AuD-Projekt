@@ -42,8 +42,7 @@ class TileMap {
         }
 
         int getTileState(int pMapPosX, int pMapPosY) {
-            int z = tileMap[pMapPosY][pMapPosX].getState();
-            return z;
+            return tileMap[pMapPosY][pMapPosX].getState();
         }
 
         void setState(int pMapPosX, int pMapPosY, int n) {
