@@ -22,7 +22,7 @@ class Item {
 
             switch(itemType){
                 case 6:
-                    itemImage = Image("gfx/items/battery.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
+                    itemImage = Image("gfx/items/batteryitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
                     break;
                 case 7:
                     itemImage = Image("gfx/items/algoitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
@@ -31,7 +31,7 @@ class Item {
                     itemImage = Image("gfx/items/sworditem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
                     break;
                 case 9:
-                    itemImage = Image("gfx/bild.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
+                    itemImage = Image("gfx/items/mapkeyitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
                     break;
                 default:
                     break;

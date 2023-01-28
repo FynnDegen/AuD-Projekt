@@ -22,7 +22,6 @@ class Player {
         int mapPosX;
         int mapPosY;
         int direc;
-        int lvl = 1;
     
         SVG *canvas;
         TileMap *tileMap;
@@ -62,7 +61,7 @@ class Player {
             
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/player/playerup.png", "gfx/player/playerleft.png",  "gfx/player/playerdown.png", "gfx/player/playerright.png");
             
-            sword = Image("gfx/bild.png", tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc), 100, 100, canvas);
+            sword = Image("gfx/player/sword.png", tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc), 100, 100, canvas);
             sword.hide();
 
             health = Text("HP: " + to_string(hp), 1600, 200, canvas); 
@@ -223,7 +222,7 @@ class Player {
             switch(tileMap -> getTileState(mapPosX, mapPosY)) {
                 case 5:
                     if(mapKey) {
-                        resetTileMap();   
+                        resetTileMap();
                     }
                     break;
                 case 6:
@@ -253,11 +252,10 @@ class Player {
             mapKey = false;
             enemyList -> clearEnemyList();
             itemList -> clearItemList();
-            lvl++;
             tileMap -> generateTileMap();
             Tile *tile = tileMap -> getRandomFreeTile();
             setPlayerOnMapPos(tile -> getMapX(), tile -> getMapY());
-            enemyList -> generateEnemyList(tileMap, canvas, lvl);
+            enemyList -> generateEnemyList(tileMap, canvas);
             itemList -> generateItemList(tileMap, canvas);
             sprite.toFront(direc);
             setFloor(floor + 1);
