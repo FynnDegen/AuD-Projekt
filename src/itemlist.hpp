@@ -31,12 +31,13 @@ class ItemList {
         void deleteItem(int pPosX, int pPosY) {
             for(it = itemList.begin(); it != itemList.end(); it++) {
                 if(it -> getMapPosX() == pPosX && it -> getMapPosY() == pPosY) {
+                    //itemList[it].destroyImage();
                     itemList.erase(it);
                 }
             }
         }
     
-        Item * getItem(int i) {
+        Item *getItem(int i) {
             return &itemList[i];
         }
     

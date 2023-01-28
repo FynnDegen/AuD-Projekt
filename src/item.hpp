@@ -7,7 +7,7 @@ class Item {
         int mapPosY;
         int itemType;
 
-        Image itemImage;
+        Image *itemImage;
 
         TileMap *tileMap;
         SVG *canvas;
@@ -22,20 +22,25 @@ class Item {
 
             switch(itemType){
                 case 6:
-                    itemImage = Image("gfx/items/batteryitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
+                    itemImage = new Image("gfx/items/batteryitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
                     break;
                 case 7:
-                    itemImage = Image("gfx/items/algoitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
+                    itemImage = new Image("gfx/items/algoitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
                     break;
                 case 8:
-                    itemImage = Image("gfx/items/sworditem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
+                    itemImage = new Image("gfx/items/sworditem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
                     break;
                 case 9:
-                    itemImage = Image("gfx/items/mapkeyitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
+                    itemImage = new Image("gfx/items/mapkeyitem.png", tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), 100, 100, canvas);
                     break;
                 default:
                     break;
             }
+        }
+    
+    
+        void destroyImage(){
+            delete(itemImage);
         }
 
         int getMapPosX() {

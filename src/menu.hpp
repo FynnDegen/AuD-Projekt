@@ -1,10 +1,10 @@
 class Menu{
     private:
-        Rect background;
-        Rect buttonRim;
-        Rect button1;
-        Rect button2;
-        Rect button3;
+        Image background;
+        Image buttonRim;
+        Image button1;
+        Image button2;
+        Image button3;
         Text titleText;
         Text button1Text;
         Text button2Text;
@@ -29,54 +29,52 @@ class Menu{
             
             menuCounter = 0;
             buttonCounter = 0;
-            background = Rect(0, 0, 5000, 5000, canvas);
-            background.setFill("lightBlue");
-            buttonRim = Rect(0, 0, 0, 0, canvas);
+            background = Image("", 0, 0, 5000, 5000, canvas);
+            buttonRim = Image("", 0, 0, 0, 0, canvas);
             titleText = Text("Cyber Crawler", 430, 300, canvas);
             titleText.setAttribute("font-size", 180);
             
-            button1 = Rect(510, 460, 980, 180 , canvas);
-            button2 = Rect(510, 710, 980, 180, canvas);
-            button3 = Rect(510, 960, 980, 180, canvas);
+            button1 = Image("", 510, 460, 980, 180 , canvas);
+            button2 = Image("", 510, 710, 980, 180, canvas);
+            button3 = Image("", 510, 960, 980, 180, canvas);
             
             button1Text = Text("Spielen", 800, 580, canvas);
             button1Text.setAttribute("font-size", 100);
-            button1Text.setAttribute("fill", "white");
+
             
             button2Text = Text("Schwierigkeit", 700, 830, canvas);
             button2Text.setAttribute("font-size", 100);
-            button2Text.setAttribute("fill", "white");
+
             
             button3Text = Text("Mitwirkende", 725, 1080, canvas);
             button3Text.setAttribute("font-size", 100);
-            button3Text.setAttribute("fill", "white");
+
         }
         
         void diffMenu(){
             
             menuCounter = 1;
             buttonCounter = 0;
-            background = Rect(0, 0, 5000, 5000, canvas);
-            background.setFill("red");
-            buttonRim = Rect(0, 0, 0, 0, canvas);
+            background = Image("", 0, 0, 5000, 5000, canvas);
+            buttonRim = Image("", 0, 0, 0, 0, canvas);
             titleText = Text("Schwierigkeitsgrad", 250, 300, canvas);
             titleText.setAttribute("font-size", 180);
             
-            button1 = Rect(510, 460, 980, 180 , canvas);
-            button2 = Rect(510, 710, 980, 180, canvas);
-            button3 = Rect(510, 960, 980, 180, canvas);
+            button1 = Image("", 510, 460, 980, 180 , canvas);
+            button2 = Image("", 510, 710, 980, 180, canvas);
+            button3 = Image("", 510, 960, 980, 180, canvas);
             
             button1Text = Text("Leicht", 850, 580, canvas);
             button1Text.setAttribute("font-size", 100);
-            button1Text.setAttribute("fill", "white");
+
             
             button2Text = Text("Medium", 825, 830, canvas);
             button2Text.setAttribute("font-size", 100);
-            button2Text.setAttribute("fill", "white");
+
             
             button3Text = Text("Schwer", 825, 1080, canvas);
             button3Text.setAttribute("font-size", 100);
-            button3Text.setAttribute("fill", "white");
+
             
             switch(diffSetting){
                  // hier die int nutzen und entsprechend setzten   
@@ -106,8 +104,7 @@ class Menu{
     
         void creatorsMenu(){
             menuCounter = 2;
-            background = Rect(0, 0, 5000, 5000, canvas);
-            background.setFill("green");
+            background = Image("", 0, 0, 5000, 5000, canvas);
             
             titleText = Text("Mitwirkende", 475, 300, canvas);
             titleText.setAttribute("font-size", 180);
@@ -150,23 +147,17 @@ class Menu{
                     
                 case 0:
                     buttonRim.moveTo(500, 450);
-                    buttonRim.setWidth(1000);
-                    buttonRim.setHeight(200);
-                    buttonRim.setFill("white");
+                    buttonRim.setSize(1000, 200);                 
                     break;
                     
                 case 1:
                     buttonRim.moveTo(500, 700);
-                    buttonRim.setWidth(1000);
-                    buttonRim.setHeight(200);
-                    buttonRim.setFill("white");
+                    buttonRim.setSize(1000, 200);
                     break;
                     
                 case 2:
                     buttonRim.moveTo(500, 950);
-                    buttonRim.setWidth(1000);
-                    buttonRim.setHeight(200);
-                    buttonRim.setFill("white");
+                    buttonRim.setSize(1000, 200);
                     break;
                     
                 default:
