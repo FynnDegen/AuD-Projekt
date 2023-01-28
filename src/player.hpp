@@ -22,6 +22,7 @@ class Player {
         int mapPosX;
         int mapPosY;
         int direc;
+        int lvl = 1;
     
         SVG *canvas;
         TileMap *tileMap;
@@ -222,7 +223,7 @@ class Player {
             switch(tileMap -> getTileState(mapPosX, mapPosY)) {
                 case 5:
                     if(mapKey) {
-                        resetTileMap();
+                        resetTileMap();   
                     }
                     break;
                 case 6:
@@ -252,10 +253,11 @@ class Player {
             mapKey = false;
             enemyList -> clearEnemyList();
             itemList -> clearItemList();
+            lvl++;
             tileMap -> generateTileMap();
             Tile *tile = tileMap -> getRandomFreeTile();
             setPlayerOnMapPos(tile -> getMapX(), tile -> getMapY());
-            enemyList -> generateEnemyList(tileMap, canvas);
+            enemyList -> generateEnemyList(tileMap, canvas, lvl);
             itemList -> generateItemList(tileMap, canvas);
             sprite.toFront(direc);
             setFloor(floor + 1);

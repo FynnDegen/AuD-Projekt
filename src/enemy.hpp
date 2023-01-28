@@ -4,7 +4,6 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
 
-// Junge was machst du auch alles kaputt :P
 class Enemy {
     private:
         int hp = 25;
@@ -25,16 +24,19 @@ class Enemy {
         
         }
     
-        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas) {
+        // abhaengig vom floor wird Leben und attDmg erhoeht
+        // mit kind wird der staerkere Gegner erzeugt (1=einfach, 2=staerker)
+        // staerkerer Gegner ist doppelt so stark
+        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas, int floor, int kind) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
+            hp = kind * (20 + (5 * floor)); // mit jedem weiteren Lvl erhoeht sich das Leben um 5
+            attDmg = kind * (9 + floor);    // mit jedem weiteren Lvl erhoeht sich der attDmg um 1
             this -> canvas = canvas;
             this -> tileMap = tileMap;
             
             tileMap -> setState(mapPosX, mapPosY, 2);
-            sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/enemies/crab/enemyup.png", "gfx/enemies/crab/enemyleft.png",  "gfx/enemies/crab/enemydown.png", "gfx/enemies/crab/enemyright.png");
-            
-            
+            sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/enemies/crab/enemydown.png", "gfx/enemies/crab/enemyleft.png",  "gfx/enemies/crab/enemydown.png", "gfx/enemies/crab/enemyright.png");
         }
     
         int moveUp() {
