@@ -4,6 +4,7 @@
 #ifndef ENEMY_HPP
 #define ENEMY_HPP
 
+// Junge was machst du auch alles kaputt :P
 class Enemy {
     private:
         int hp = 25;
