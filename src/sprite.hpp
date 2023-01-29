@@ -6,24 +6,26 @@
 class Sprite {
     private:
         Image pedUp, pedLeft, pedDown, pedRight;
+        
     public:
+
+        // Konstruktoren //
+
         Sprite() {
             
         }
-    
-        // Nuetzlich fuer die Items
-        Sprite(SVG *pSVG, int pX, int pY, std::string pPedUpPath) {
-            pedUp = Image(pPedUpPath, pX, pY, 100, 100, pSVG);
-        }
 
-        // Fuer Spieler und Gegner
+        // fuer Spieler und Gegner
         Sprite(SVG *pSVG, int pX, int pY, std::string pPedUpPath, std::string pPedLeftPath, std::string pPedDownPath, std::string pPedRightPath) {
             pedUp = Image(pPedUpPath, pX, pY, 100, 100, pSVG);
             pedLeft = Image(pPedLeftPath, pX, pY, 100, 100, pSVG);
             pedDown = Image(pPedDownPath, pX, pY, 100, 100, pSVG);
             pedRight = Image(pPedRightPath, pX, pY, 100, 100, pSVG);
         }
+
+        // Methoden //
     
+        // bewegt die Sprites
         void moveSprite(int pX, int pY) {
             pedUp.moveTo(pX, pY);
             pedLeft.moveTo(pX, pY);
@@ -31,6 +33,7 @@ class Sprite {
             pedRight.moveTo(pX, pY);
         }
     
+        // zeigt die aktuelle Bewegungsrichtung an
         void toFront(int n) {
             switch(n) {
                 case 0:

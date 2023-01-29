@@ -1,6 +1,7 @@
 #include <algoviz/SVG.hpp>
 #include "enemylist.hpp"
 #include "itemlist.hpp"
+#include "overlay.hpp"
 #include "sprite.hpp"
 #include <string>
 
@@ -28,20 +29,17 @@ class Player {
         
         Sprite sprite;
         Image sword;
-        Rect dead;
+        Overlay overlay;
     
         bool startNewGame = false;
     
         // rudimentäres Textfeld fuers Leben
-        Image overlay;
-        Text health;
-        Text dmg;
-        Text points;
-        Text lvlText;
-        Text deadText;
-        Image cross, checkmark;
+
     
     public:
+
+        // Konstruktoren //
+
         Player() {
             
         }
@@ -57,48 +55,15 @@ class Player {
             
             tileMap -> setState(mapPosX, mapPosY, 3);
             
-            dead = Rect(0, 0, 1500, 1500, canvas);
-            dead.hide();
-            dead.setFill(176, 30, 30, 0.6);
-            
             sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/player/playerup.png", "gfx/player/playerleft.png",  "gfx/player/playerdown.png", "gfx/player/playerright.png");
             
             sword = Image("gfx/player/sword.png", tileMap -> getSwordPosX(mapPosX, mapPosY, direc), tileMap -> getSwordPosY(mapPosX, mapPosY, direc), 100, 100, canvas);
             sword.hide();
             
-            overlay = Image("gfx/overlay/overlay.png", 1750, 750, 500, 1500, canvas);
-
-            health = Text(to_string(hp), 1740, 290, canvas); 
-            health.setAttribute("font-size", 100); 
-            health.setFill("white");
-            health.setColor("white");
-            
-            dmg = Text(to_string(attDmg), 1740, 420, canvas); 
-            dmg.setAttribute("font-size", 100);
-            dmg.setFill("white");
-            dmg.setColor("white");
-            
-            lvlText = Text(to_string(lvl), 1740, 530, canvas); 
-            lvlText.setAttribute("font-size", 100);
-            lvlText.setFill("white");
-            lvlText.setColor("white");
-            
-            points = Text(to_string(score), 1740, 630, canvas); 
-            points.setAttribute("font-size", 100);
-            points.setFill("white");
-            points.setColor("white");
-            
-            deadText = Text("REBOOTING...", 500, 750, canvas); 
-            deadText.setAttribute("font-size", 80);
-            deadText.setAttribute("font-stroke", 7);
-            deadText.setFill("white");
-            deadText.setColor("white");
-            deadText.hide();
-            
-            checkmark = Image("gfx/overlay/checkmark.png", 1780, 685, 100, 100, canvas);
-            checkmark.hide();
-            cross = Image("gfx/overlay/cross.png", 1780, 685, 100, 100, canvas);
+            overlay = Overlay(canvas);
         }
+
+        // Methoden //
     
         // koordiniert die Tasten
         void keyMovement(string pKey, EnemyList *pEnemyList) {
@@ -224,8 +189,7 @@ class Player {
                 case 9:
                     mapKey = true;
                     tileMap -> setState(mapPosX, mapPosY, 3);
-                    cross.hide();
-                    checkmark.show();
+                    overlay.updateMapKey(mapKey);
                     break;
                 default:
                     tileMap -> setState(mapPosX, mapPosY, 3);
@@ -247,8 +211,7 @@ class Player {
             enemyList -> generateEnemyList(tileMap, canvas, lvl);
             itemList -> generateItemList(tileMap, canvas);
             sprite.toFront(direc);
-            checkmark.hide();
-            cross.show();
+            overlay.updateMapKey(mapKey);
         }
     
         // sondierende Methoden //
@@ -262,13 +225,10 @@ class Player {
             hp = pHP;
             if (hp <= 0) {
                 hp = 0;
-                dead.show();
-                dead.toFront();
-                deadText.show();
-                deadText.toFront();
+                overlay.showDeathScreen();
                 startNewGame = true;
             }
-            health.setText(to_string(hp));
+            overlay.updateHealth(hp);
         }
     
         int getAttDmg() {
@@ -277,7 +237,7 @@ class Player {
 
         void setAttDmg(int pAttDmg) {
             attDmg = pAttDmg;
-            dmg.setText(to_string(attDmg));
+            overlay.updateDmg(attDmg);
         }
     
         int getMapPosX() {
@@ -294,12 +254,12 @@ class Player {
     
         void setScore(int pScore) {
             score = pScore;
-            points.setText(to_string(score));
+            overlay.updatePoints(score);
         }
     
         void setLvl(int pLvl) {
             lvl = pLvl;
-            lvlText.setText(to_string(lvl));
+            overlay.updateLvl(lvl);
         }
     
         int getKills() {

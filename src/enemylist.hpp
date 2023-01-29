@@ -13,6 +13,9 @@ class EnemyList {
         int diff;
     
     public:
+
+        // Konstruktoren //
+
         EnemyList() {
 
         }
@@ -21,7 +24,10 @@ class EnemyList {
             diff = difficult;
             generateEnemyList(tileMap, canvas, 1);
         }
+
+        // Methoden //
     
+        // fragt ab, ob ein Gegner auf dem Tile ist und gibt es ggf. zurueck
         Enemy *enemyOnTile(int pMapPosX, int pMapPosY) {
             for(int i = 0; i < enemyList.size(); i++) {
                 if(enemyList[i].getMapPosX() == pMapPosX && enemyList[i].getMapPosY() == pMapPosY) {
@@ -31,7 +37,7 @@ class EnemyList {
             return nullptr;        
         }
     
-        // löscht den getoeteten Enemy aus dem Vector
+        // loescht den getoeteten Gegner aus dem Vector
         void deleteEnemy(int pPosX, int pPosY){
             for(int i = 0; i < enemyList.size(); i++) {
                 if (enemyList[i].getMapPosX() == pPosX && enemyList[i].getMapPosY() == pPosY) {
@@ -40,16 +46,8 @@ class EnemyList {
                 }
             }
         }
-    
-        Enemy * getEnemy(int i) {
-            return &enemyList[i];
-        }
-    
-        int getSize(){
-            return enemyList.size(); 
-        }
-    
 
+        // generiert eine Liste mit zuefaellig vielen Gegner in Abhaengigkeit vom Schwierigkeitsgrads
         void generateEnemyList(TileMap *tileMap, SVG *canvas, int lvl) {
             for(int i = 0; i < numberOfLightEnemies(); i++) {
                 Tile *tile = tileMap -> getRandomFreeTile();
@@ -61,6 +59,7 @@ class EnemyList {
             }
         }
     
+        // gibt die Zahl der leichten Gegner zurueck in Abhaengigkeit vom Schwierigkeitsgrad
         int numberOfLightEnemies() {
             switch(diff) {
                 case 0:
@@ -70,11 +69,11 @@ class EnemyList {
                 case 2:
                     return 8 + rand() % 12;
                 default:
-                    return 14; 
-                    // Wer meint da rumspielen zu müssen (idk wieso) der wird halt bestraft
+                    return 3 + rand() % 4;
             }
         }
     
+        // gibt die Zahl der schweren Gegner zurueck in Abhaengigkeit vom Schwierigkeitsgrad
         int numberOfHeavyEnemies() {
             switch(diff) {
                 case 0:
@@ -84,13 +83,23 @@ class EnemyList {
                 case 2:
                     return 3 + rand() % 5;
                 default:
-                    return 14; 
-                    // Wer meint da rumspielen zu müssen (idk wieso) der wird halt bestraft
+                    return rand() % 2;
             }
         }
     
+        // loescht alle Elemente aus dem Vector
         void clearEnemyList() {
             enemyList.clear();
+        }
+
+        // sondierende Methoden //
+
+        Enemy * getEnemy(int i) {
+            return &enemyList[i];
+        }
+    
+        int getSize(){
+            return enemyList.size(); 
         }
 };
 #endif

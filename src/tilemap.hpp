@@ -11,6 +11,9 @@ class TileMap {
         int walls[15][15];
    
     public:
+
+        // Konstruktoren //
+
         TileMap() {
             
         }
@@ -20,6 +23,9 @@ class TileMap {
             generateTileMap();
         }
     
+        // Methoden //
+
+        // gebe ein freies Feld zurueck
         Tile * getRandomFreeTile() {
             int x, y;
             do {
@@ -29,26 +35,7 @@ class TileMap {
             return &tileMap[y][x];
         }
     
-        Tile getTile(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY][pMapPosX];
-        }
-    
-        int getTilePosX(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY][pMapPosX].getX();
-        }
-
-        int getTilePosY(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY][pMapPosX].getY();
-        }
-
-        int getTileState(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY][pMapPosX].getState();
-        }
-
-        void setState(int pMapPosX, int pMapPosY, int n) {
-            tileMap[pMapPosY][pMapPosX].setState(n);
-        }
-
+        // Position des Schwerts
         int getSwordPosX(int pMapPosX, int pMapPosY, int pDirec) {
             switch(pDirec) {
                 case 0:
@@ -64,6 +51,7 @@ class TileMap {
             }
         }
 
+        // Position des Schwerts
         int getSwordPosY(int pMapPosX, int pMapPosY, int pDirec) {
             switch(pDirec) {
                 case 0:
@@ -79,6 +67,7 @@ class TileMap {
             }
         }
 
+        // Kartenposition des Schwerts
         int getSwordMapPosX(int pMapPosX, int pMapPosY, int pDirec) {
             switch(pDirec) {
                 case 0:
@@ -94,6 +83,7 @@ class TileMap {
             }
         }
 
+        // Kartenposition des Schwerts
         int getSwordMapPosY(int pMapPosX, int pMapPosY, int pDirec) {
             switch(pDirec) {
                 case 0:
@@ -109,22 +99,7 @@ class TileMap {
             }
         }
 
-        int getTileStateUp(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY - 1][pMapPosX].getState();
-        }
-
-        int getTileStateLeft(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY][pMapPosX - 1].getState();
-        }
-
-        int getTileStateDown(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY + 1][pMapPosX].getState();
-        }
-
-        int getTileStateRight(int pMapPosX, int pMapPosY) {
-            return tileMap[pMapPosY][pMapPosX + 1].getState();
-        }
-
+        // ist Gegner in Schwertrichtung
         int swordHit(int pMapPosX, int pMapPosY, int pDirec) {
             switch(pDirec) {
                 case 0:
@@ -155,16 +130,20 @@ class TileMap {
                     return 0;
             }
         }
-    
+
+        // dynamische Kartengenerierung
         void generateTileMap() {
+            // setzte alles auf Waende
             for (int i = 0; i < 15; i++) {
                 for (int j = 0; j < 15; j++) {
                     walls[i][j] = 1;
                 }
             }
 
+            // generiere Weg an einem zufaelligen Startpunkt
             generateMaze(1 + std::rand() % 14, 1 + std::rand() % 14);
 
+            // generiere Raueme
             for(int i = 0; i < 1 + std::rand() % 3; i++) {
                 int x = 1 + std::rand() % 11;
                 int y = 1 + std::rand() % 11;
@@ -176,6 +155,7 @@ class TileMap {
                 }  
             }
 
+            // generiere Aussenwand
             for(int i = 0; i < 14; i++) {
                 walls[i][0] = 1;
                 walls[0][i] = 1;
@@ -183,6 +163,7 @@ class TileMap {
                 walls[14][i] = 1;
             }
             
+            // uebersetze in Tiles
             for(int i = 0; i < 15; i++) {
                 for(int k = 0; k < 15; k++) {
                     tileMap[i][k] = Tile(k*100, i*100, k, i, walls[i][k], canvas);
@@ -192,35 +173,81 @@ class TileMap {
             setMapExit();
         }
     
-        void generateMaze(int x, int y) {
-            walls[x][y] = 0;
+        void generateMaze(int pX, int pY) {
+            // Startpunkt
+            walls[pX][pY] = 0;
 
+            // zufaellige Richtungen
             int directions[4] = {0, 1, 2, 3};
             std::random_shuffle(directions, directions + 4);
 
+            // Weggenerierung
             for (int i = 0; i < 4; i++) {
-                if (directions[i] == 0 && x > 2 && walls[x-2][y] != 0) {
-                    walls[x-1][y] = 0;
-                    generateMaze(x-2, y);
+                // wenn die Richtung 0 ist und zwei Bloecke dahinter frei ist gehe ein vor
+                if (directions[i] == 0 && pX > 2 && walls[pX-2][pY] != 0) {
+                    walls[pX-1][pY] = 0;
+                    generateMaze(pX-2, pY);
                 }
-                if (directions[i] == 1 && x < 12 && walls[x+2][y] != 0) {
-                    walls[x+1][y] = 0;
-                    generateMaze(x+2, y);
+                // wenn die Richtung 1 ist und zwei Bloecke dahinter frei ist gehe ein vor
+                if (directions[i] == 1 && pX < 12 && walls[pX+2][pY] != 0) {
+                    walls[pX+1][pY] = 0;
+                    generateMaze(pX+2, pY);
                 }
-                if (directions[i] == 2 && y > 2 && walls[x][y-2] != 0) {
-                    walls[x][y-1] = 0;
-                    generateMaze(x, y-2);
+                // wenn die Richtung 2 ist und zwei Bloecke dahinter frei ist gehe ein vor
+                if (directions[i] == 2 && pY > 2 && walls[pX][pY-2] != 0) {
+                    walls[pX][pY-1] = 0;
+                    generateMaze(pX, pY-2);
                 }
-                if (directions[i] == 3 && y < 12 && walls[x][y+2] != 0) {
-                    walls[x][y+1] = 0;
-                    generateMaze(x, y+2);
+                // wenn die Richtung 3 ist und zwei Bloecke dahinter frei ist gehe ein vor
+                if (directions[i] == 3 && pY < 12 && walls[pX][pY+2] != 0) {
+                    walls[pX][pY+1] = 0;
+                    generateMaze(pX, pY+2);
                 }
             }
         }
     
+        // generiere zufaelligen Kartenausgang
         void setMapExit() {
             Tile *tile = getRandomFreeTile();
             *tile = Tile(tile -> getX() - 50, tile -> getY() - 50, tile -> getMapX(), tile -> getMapY(), 5, canvas);
+        }
+
+        // sondierende Methoden //
+
+        Tile getTile(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY][pMapPosX];
+        }
+    
+        int getTilePosX(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY][pMapPosX].getX();
+        }
+
+        int getTilePosY(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY][pMapPosX].getY();
+        }
+
+        int getTileState(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY][pMapPosX].getState();
+        }
+
+        void setState(int pMapPosX, int pMapPosY, int n) {
+            tileMap[pMapPosY][pMapPosX].setState(n);
+        }
+
+        int getTileStateUp(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY - 1][pMapPosX].getState();
+        }
+
+        int getTileStateLeft(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY][pMapPosX - 1].getState();
+        }
+
+        int getTileStateDown(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY + 1][pMapPosX].getState();
+        }
+
+        int getTileStateRight(int pMapPosX, int pMapPosY) {
+            return tileMap[pMapPosY][pMapPosX + 1].getState();
         }
 };
 #endif

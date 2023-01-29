@@ -8,20 +8,23 @@ class Tile {
     private:
         int posX;
         int posY;
-        int state; // speichert den Tag den das Tile zugeteilt bekommt (1=Wand, 0=Frei, 2=Enemy, 3=Player, 4usw item oder so) 
+        int state; // speichert den Zustand den das Tile zugeteilt bekommt (1=Wand, 0=Frei, 2=Enemy, 3=Player, 4usw Items oder so) 
                    // NUR WERTE ZWISCHEN 0 und joar wie ihr Bock habt!
         int mapX;  // speichert die x-Pos vom Array Bauplan
         int mapY;  // speichert die y-Pos vom Array Bauplan
+
         SVG *field;
         Image tile;
     
-    public:      
+    public:
+
+        // Konstruktoren //
+
         Tile() {
             posX = 0;
             posY = 0;
             state = 1;
             field = nullptr;
-
         }
 
         Tile(int posX, int posY, int mapX, int mapY, int state, SVG *field) {
@@ -36,11 +39,13 @@ class Tile {
                 tile = Image("gfx/tiles/wall.png",posX + 50, posY + 50, 100, 100, field);
             } else if(state == 5) {
                 tile = Image("gfx/tiles/teleportationpad.png", posX + 50, posY + 50, 100, 100, field);
-            } else {
+            } else if(state == 0) {
                 tile = Image("gfx/tiles/floor.png",posX + 50, posY + 50, 100, 100, field);
             }
 
         }
+
+        // sondierende Methoden //
 
         int getX() {
             return posX + 50;

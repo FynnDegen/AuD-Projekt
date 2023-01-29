@@ -1,3 +1,7 @@
-AuD*-Projekt Osnabrück WiSe 2022/23 Prof. Dr. Michael Brinkmeier | Dungeon Crawler
+AuD-Projekt | Dungeon Crawler
 
-*Algorithmen und Datenstrukturen
+Universität Osnabrück
+WiSe 2022/23
+Prof. Dr. Michael Brinkmeier
+
+letzter Algorithmen und Datenstrukturen Kurs :(

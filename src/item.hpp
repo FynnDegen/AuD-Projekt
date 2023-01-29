@@ -13,6 +13,9 @@ class Item {
         SVG *canvas;
     
    public:
+
+        // Konstruktor //
+
         Item(int pMapPosX, int pMapPosY, int pItemType,  TileMap *pTileMap, SVG *pCanvas) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
@@ -37,11 +40,14 @@ class Item {
                     break;
             }
         }
-    
+
+        // Methoden //
     
         void destroyImage(){
             delete(itemImage);
         }
+
+        // sondierende Methoden //
 
         int getMapPosX() {
             return mapPosX;

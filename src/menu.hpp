@@ -1,5 +1,8 @@
 #include <string>
 
+#ifndef MENU_HPP
+#define MENU_HPP
+
 class Menu {
     private:
         Image background;
@@ -22,14 +25,18 @@ class Menu {
         
     public:
     
+        // Konstruktor //
+
         Menu(int pHighScore, int pOverallKills, int pHighestLvl, SVG *pCanvas) {
             highScore = pHighScore;
             overallKills = pOverallKills;
             highestLvl = pHighestLvl;
             canvas = pCanvas;
+
             mainMenu();
         }
         
+        // Hauptmenue
         void mainMenu() {
             menuCounter = 0;
             buttonCounter = 0;
@@ -44,6 +51,7 @@ class Menu {
             buttonBorder = Image("gfx/menu/buttons/buttonborder.png", 1000, 500, 980, 180, canvas);
         }
         
+        // Einstellungen
         void diffMenu() {
             menuCounter = 1;
             buttonCounter = 0;
@@ -74,6 +82,7 @@ class Menu {
             }
         }
     
+        // Statistiken
         void statisticsMenu() {
             menuCounter = 2;
             background = Image("gfx/menu/backgrounds/statistics.png", 1000, 750, 2000, 1500, canvas);
@@ -94,13 +103,16 @@ class Menu {
             lvlText.setColor("white");
         }
     
+        // Mitwirkende
         void creatorsMenu() {
             menuCounter = 3;
             background = Image("gfx/menu/backgrounds/credits.png", 1000, 750, 2000, 1500, canvas); 
         }
     
+        // Steuerung der Menues
         void update(string lastKey) {
             if(lastKey == "ArrowDown") {
+                // aktueller Button
                 if(buttonCounter < 3) {
                     buttonCounter++;
                 } else {
@@ -114,6 +126,7 @@ class Menu {
                 }
             }   
             
+            // graphischer aktueller Button
             switch(buttonCounter) {
                 case 0:
                     buttonBorder.moveTo(1000, 500);           
@@ -138,6 +151,7 @@ class Menu {
             }
             
             if(lastKey == "Enter" && menuCounter == 0) {
+                // Hauptmenue
                 switch(buttonCounter) {
                     case 0:
                         gameStart = true;
@@ -155,6 +169,7 @@ class Menu {
                         break;  
                 }
             } else if(lastKey == "Enter" && menuCounter == 1) {
+                // Einstellungen
                 switch(buttonCounter) {
                     case 0:
                         diffSetting = 0;
@@ -172,10 +187,13 @@ class Menu {
                         break;  
                 }
             } else if(lastKey == "Enter" && menuCounter == 2) {
+                // Statistiken
                 statisticsMenu();
             } else if(lastKey == "Enter" && menuCounter == 3) {
+                // Mitwirkende
                 creatorsMenu();
             }else if(lastKey == "Escape" && menuCounter > 0) { 
+                // Hauptmenue wenn in Untermenue
                 mainMenu();
             }
         }
@@ -185,3 +203,4 @@ class Menu {
            return gameStart; 
         }
 };
+#endif
