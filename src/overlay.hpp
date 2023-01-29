@@ -9,6 +9,7 @@ class Overlay {
     
         Rect dead;
         Text deadText;
+        Text deadBack;
         
     public:
     
@@ -51,6 +52,13 @@ class Overlay {
             deadText.setFill("white");
             deadText.setColor("white");
             deadText.hide();
+            
+            deadBack = Text("Press ESC", 610, 800, canvas); 
+            deadBack.setAttribute("font-size", 50);
+            deadBack.setAttribute("font-stroke", 7);
+            deadBack.setFill("white");
+            deadBack.setColor("white");
+            deadBack.hide();
 
             checkmark = Image("gfx/overlay/checkmark.png", 1780, 685, 100, 100, canvas);
             checkmark.hide();
@@ -90,6 +98,8 @@ class Overlay {
             dead.toFront();
             deadText.show();
             deadText.toFront();
+            deadBack.show();
+            deadBack.toFront();
         }
 };
 #endif

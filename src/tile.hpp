@@ -8,10 +8,10 @@ class Tile {
     private:
         int posX;
         int posY;
-        int state; // speichert den Zustand den das Tile zugeteilt bekommt (1=Wand, 0=Frei, 2=Enemy, 3=Player, 4usw Items oder so) 
-                   // NUR WERTE ZWISCHEN 0 und joar wie ihr Bock habt!
-        int mapX;  // speichert die x-Pos vom Array Bauplan
-        int mapY;  // speichert die y-Pos vom Array Bauplan
+        int state;  // speichert den Zustand den das Tile zugeteilt bekommt (1=Wand, 0=Frei, 2=Enemy, 
+                    // 3=Player, 4usw Items oder so) -> NUR WERTE Ab 0
+        int mapX;   // speichert die x-Pos vom Array Bauplan
+        int mapY;   // speichert die y-Pos vom Array Bauplan
 
         SVG *field;
         Image tile;
