@@ -1,223 +1,186 @@
-class Menu{
+#include <string>
+
+class Menu {
     private:
         Image background;
-        Image buttonRim;
-        Image button1;
-        Image button2;
-        Image button3;
-        Text titleText;
-        Text button1Text;
-        Text button2Text;
-        Text button3Text;
-        Text diffText;
-        Text escText;
+        Image buttonBorder;
+        Image btn1, btn2, btn3, btn4;
+        Image currentSet;
+        Text scoreText, killsText, lvlText;
+
         int buttonCounter = 0;
         int menuCounter;
         int diffSetting = 0; // 0=einfach, 1=mittel, 2=schwer
         string lastKey;
         bool gameStart = false;
+    
+        int highScore = 0;
+        int overallKills = 0;
+        int highestLvl = 0;
+    
         SVG *canvas;
         
     public:
     
-        Menu(SVG *canvas){
-            this -> canvas = canvas;
+        Menu(int pHighScore, int pOverallKills, int pHighestLvl, SVG *pCanvas) {
+            highScore = pHighScore;
+            overallKills = pOverallKills;
+            highestLvl = pHighestLvl;
+            canvas = pCanvas;
             mainMenu();
         }
         
-        void mainMenu(){
-            
+        void mainMenu() {
             menuCounter = 0;
             buttonCounter = 0;
-            background = Image("", 0, 0, 5000, 5000, canvas);
-            buttonRim = Image("", 0, 0, 0, 0, canvas);
-            titleText = Text("Cyber Crawler", 430, 300, canvas);
-            titleText.setAttribute("font-size", 180);
             
-            button1 = Image("", 510, 460, 980, 180 , canvas);
-            button2 = Image("", 510, 710, 980, 180, canvas);
-            button3 = Image("", 510, 960, 980, 180, canvas);
+            background = Image("gfx/menu/backgrounds/mainmenu.png", 1000, 750, 2000, 1500, canvas);
             
-            button1Text = Text("Spielen", 800, 580, canvas);
-            button1Text.setAttribute("font-size", 100);
-
+            btn1 = Image("gfx/menu/buttons/mainmenu/play.png", 1000, 500, 980, 180, canvas);
+            btn2 = Image("gfx/menu/buttons/mainmenu/settings.png", 1000, 750, 980, 180, canvas);
+            btn3 = Image("gfx/menu/buttons/mainmenu/statistics.png", 1000, 1000, 980, 180, canvas);
+            btn4 = Image("gfx/menu/buttons/mainmenu/credits.png", 1000, 1250, 980, 180, canvas);
             
-            button2Text = Text("Schwierigkeit", 700, 830, canvas);
-            button2Text.setAttribute("font-size", 100);
-
-            
-            button3Text = Text("Mitwirkende", 725, 1080, canvas);
-            button3Text.setAttribute("font-size", 100);
-
+            buttonBorder = Image("gfx/menu/buttons/buttonborder.png", 1000, 500, 980, 180, canvas);
         }
         
-        void diffMenu(){
-            
+        void diffMenu() {
             menuCounter = 1;
             buttonCounter = 0;
-            background = Image("", 0, 0, 5000, 5000, canvas);
-            buttonRim = Image("", 0, 0, 0, 0, canvas);
-            titleText = Text("Schwierigkeitsgrad", 250, 300, canvas);
-            titleText.setAttribute("font-size", 180);
             
-            button1 = Image("", 510, 460, 980, 180 , canvas);
-            button2 = Image("", 510, 710, 980, 180, canvas);
-            button3 = Image("", 510, 960, 980, 180, canvas);
+            background = Image("gfx/menu/backgrounds/settings.png", 1000, 750, 2000, 1500, canvas);
             
-            button1Text = Text("Leicht", 850, 580, canvas);
-            button1Text.setAttribute("font-size", 100);
-
+            btn1 = Image("gfx/menu/buttons/settings/easy.png", 1000, 500, 980, 180, canvas);
+            btn2 = Image("gfx/menu/buttons/settings/normal.png", 1000, 750, 980, 180, canvas);
+            btn3 = Image("gfx/menu/buttons/settings/hard.png", 1000, 1000, 980, 180, canvas);
+            btn4 = Image("", 1000, 1020, 980, 180, canvas);
             
-            button2Text = Text("Medium", 825, 830, canvas);
-            button2Text.setAttribute("font-size", 100);
-
+            currentSet = Image("gfx/menu/buttons/settings/current.png", 380, 500, 200, 180 , canvas);
             
-            button3Text = Text("Schwer", 825, 1080, canvas);
-            button3Text.setAttribute("font-size", 100);
-
+            buttonBorder = Image("gfx/menu/buttons/buttonborder.png", 1000, 520, 980, 180, canvas);
             
-            switch(diffSetting){
-                 // hier die int nutzen und entsprechend setzten   
+            switch(diffSetting) { 
                 case 0:
-                    diffText = Text("Der Schwierigkeitsgrad ist auf LEICHT gesetzt.", 50, 1300, canvas);
-                    diffText.setAttribute("font-size", 75);
+                    currentSet.moveTo(380, 500);
                     break;
-                    
                 case 1:
-                    diffText = Text("Der Schwierigkeitsgrad ist auf MEDIUM gesetzt.", 50, 1300, canvas);
-                    diffText.setAttribute("font-size", 75);
-
+                    currentSet.moveTo(380, 750);
                     break;
-                    
                 case 2:
-                    diffText = Text("Der Schwierigkeitsgrad ist auf SCHWER gesetzt.", 50, 1300, canvas);
-                    diffText.setAttribute("font-size", 75);
+                    currentSet.moveTo(380, 1000);
                     break;
-                    
                 default:
                     break;  
             }
-            
-            escText = Text("Esc, um zum Hauptmenü zurückzukehren.", 0, 1490, canvas);
-            escText.setAttribute("font-size", 50);
         }
     
-        void creatorsMenu(){
+        void statisticsMenu() {
             menuCounter = 2;
-            background = Image("", 0, 0, 5000, 5000, canvas);
+            background = Image("gfx/menu/backgrounds/statistics.png", 1000, 750, 2000, 1500, canvas);
             
-            titleText = Text("Mitwirkende", 475, 300, canvas);
-            titleText.setAttribute("font-size", 180);
-
-            button1Text = Text("Fynn Degen", 710, 580, canvas);
-            button1Text.setAttribute("font-size", 100);
-            
-            button2Text = Text("Jan Miller", 750, 830, canvas);
-            button2Text.setAttribute("font-size", 100);
-            
-            button3Text = Text("Jannis Neuhaus", 610, 1080, canvas);
-            button3Text.setAttribute("font-size", 100);
-            
-            escText = Text("ESC, um zum Hauptmenü zurückzukehren.", 0, 1490, canvas);
-            escText.setAttribute("font-size", 50);
-            
+            scoreText = Text(to_string(highScore), 1200, 660, canvas);
+            scoreText.setAttribute("font-size", 200);
+            scoreText.setFill("white");
+            scoreText.setColor("white");
+                
+            killsText = Text(to_string(overallKills), 750, 920, canvas);
+            killsText.setAttribute("font-size", 200);
+            killsText.setFill("white");
+            killsText.setColor("white");
+                
+            lvlText = Text(to_string(highestLvl), 1350, 1170, canvas);
+            lvlText.setAttribute("font-size", 200);
+            lvlText.setFill("white");
+            lvlText.setColor("white");
         }
     
-        void Update(string lastKey){
-        
-            if(lastKey == "ArrowDown"){
-                if(buttonCounter < 2){
+        void creatorsMenu() {
+            menuCounter = 3;
+            background = Image("gfx/menu/backgrounds/credits.png", 1000, 750, 2000, 1500, canvas); 
+        }
+    
+        void update(string lastKey) {
+            if(lastKey == "ArrowDown") {
+                if(buttonCounter < 3) {
                     buttonCounter++;
-                }
-                else{
+                } else {
                     buttonCounter = 0;
                 }
-            } 
-            else if(lastKey == "ArrowUp"){
-                if(buttonCounter > 0){
+            } else if(lastKey == "ArrowUp") {
+                if(buttonCounter > 0) {
                      buttonCounter--;
-                }
-                else{
-                    buttonCounter = 2;
+                } else {
+                    buttonCounter = 3;
                 }
             }   
             
-            
-            switch(buttonCounter){
-                    
+            switch(buttonCounter) {
                 case 0:
-                    buttonRim.moveTo(500, 450);
-                    buttonRim.setSize(1000, 200);                 
+                    buttonBorder.moveTo(1000, 500);           
                     break;
-                    
                 case 1:
-                    buttonRim.moveTo(500, 700);
-                    buttonRim.setSize(1000, 200);
+                    buttonBorder.moveTo(1000, 750);
                     break;
-                    
                 case 2:
-                    buttonRim.moveTo(500, 950);
-                    buttonRim.setSize(1000, 200);
+                    buttonBorder.moveTo(1000, 1000);
                     break;
-                    
+                case 3:
+                    if(menuCounter == 0) {
+                        buttonBorder.moveTo(1000, 1250);
+                    } else if(lastKey == "ArrowDown") {
+                        buttonCounter = 0;
+                    } else if(lastKey == "ArrowUp") {
+                        buttonCounter = 2;
+                    }
+                    break;
                 default:
                     break;  
             }
             
-            if(lastKey == "Enter" && menuCounter == 0){
-                switch(buttonCounter){
-                    
+            if(lastKey == "Enter" && menuCounter == 0) {
+                switch(buttonCounter) {
                     case 0:
                         gameStart = true;
                         break;
-                    
                     case 1:
                         diffMenu();
                         break;
-                    
                     case 2:
+                        statisticsMenu();
+                        break;
+                    case 3:
                         creatorsMenu();
                         break;
-                    
                     default:
                         break;  
                 }
-            }
-            else if(lastKey == "Enter" && menuCounter == 1){
-                
-                switch(buttonCounter){
-                    
+            } else if(lastKey == "Enter" && menuCounter == 1) {
+                switch(buttonCounter) {
                     case 0:
-                        diffText = Text("Der Schwierigkeitsgrad ist auf LEICHT gesetzt.", 50, 1300, canvas);
-                        diffText.setAttribute("font-size", 75);
                         diffSetting = 0;
+                        currentSet.moveTo(380, 500);
                         break;
-                    
                     case 1:
-                        diffText = Text("Der Schwierigkeitsgrad ist auf MEDIUM gesetzt.", 50, 1300, canvas);
-                        diffText.setAttribute("font-size", 75);
                         diffSetting = 1;
+                        currentSet.moveTo(380, 750);
                         break;
-                    
                     case 2:
-                        diffText = Text("Der Schwierigkeitsgrad ist auf SCHWER gesetzt.", 50, 1300, canvas);
-                        diffText.setAttribute("font-size", 75);
                         diffSetting = 2;
+                        currentSet.moveTo(380, 1000);
                         break;
-                    
                     default:
                         break;  
                 }
-            }
-            
-            else if(lastKey == "Escape" && (menuCounter == 1 || menuCounter == 2)){ 
+            } else if(lastKey == "Enter" && menuCounter == 2) {
+                statisticsMenu();
+            } else if(lastKey == "Enter" && menuCounter == 3) {
+                creatorsMenu();
+            }else if(lastKey == "Escape" && menuCounter > 0) { 
                 mainMenu();
             }
         }
     
-        
-    
-        bool getGameStart(int &difficult){
+        bool getGameStart(int &difficult) {
            difficult = diffSetting; // Referenz mit int diff gleichsetzten
            return gameStart; 
         }

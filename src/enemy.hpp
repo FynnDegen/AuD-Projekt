@@ -8,7 +8,7 @@ class Enemy {
     private:
         int hp = 25;
         int attDmg = 10;
-        int attSpd;
+        int type;
     
         int mapPosX; // Schachbrettkoordinate
         int mapPosY; // Schachbrettkoordinate
@@ -27,18 +27,32 @@ class Enemy {
         // abhaengig vom floor wird Leben und attDmg erhoeht
         // mit kind wird der staerkere Gegner erzeugt (1=einfach, 2=staerker)
         // staerkerer Gegner ist doppelt so stark
-        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas, int floor, int kind) {
+        Enemy(int pMapPosX, int pMapPosY, TileMap *tileMap, SVG *canvas, int floor, int pType) {
             mapPosX = pMapPosX;
             mapPosY = pMapPosY;
-            hp = kind * (20 + (5 * floor)); // mit jedem weiteren Lvl erhoeht sich das Leben um 5
-            attDmg = kind * (9 + floor);    // mit jedem weiteren Lvl erhoeht sich der attDmg um 1
+            type = pType;
             this -> canvas = canvas;
             this -> tileMap = tileMap;
             
             tileMap -> setState(mapPosX, mapPosY, 2);
-            sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/enemies/crab/enemydown.png", "gfx/enemies/crab/enemyleft.png",  "gfx/enemies/crab/enemydown.png", "gfx/enemies/crab/enemyright.png");
+            
+            switch(type) {
+                case 0:
+                    hp = 20 + (5 * floor); // mit jedem weiteren Lvl erhoeht sich die hp um 5
+                    attDmg = 9 + floor;    // mit jedem weiteren Lvl erhoeht sich der attDmg um 1
+                    sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/enemies/crab/enemyup.png", "gfx/enemies/crab/enemyleft.png",  "gfx/enemies/crab/enemydown.png", "gfx/enemies/crab/enemyright.png");
+                    break;
+                case 1:
+                    hp = 40 + (10 * floor); // mit jedem weiteren Lvl erhoeht sich die hp um 10
+                    attDmg = 20 + (2 * floor);    // mit jedem weiteren Lvl erhoeht sich der attDmg um 2
+                    sprite = Sprite(canvas, tileMap -> getTilePosX(mapPosX, mapPosY), tileMap -> getTilePosY(mapPosX, mapPosY), "gfx/enemies/pyramide/enemyup.png", "gfx/enemies/pyramide/enemyleft.png",  "gfx/enemies/pyramide/enemydown.png", "gfx/enemies/pyramide/enemyright.png");
+                    break;
+            }
         }
     
+        // Gegnerbewegnung //
+    
+        // bewege Gegner nach oben
         int moveUp() {
             sprite.toFront(0);
             switch(tileMap -> getTileStateUp(mapPosX, mapPosY)) {
@@ -55,6 +69,7 @@ class Enemy {
             }
         }
     
+        // bewege Gegner nach links
         int moveLeft() {
             sprite.toFront(1);
              switch(tileMap -> getTileStateLeft(mapPosX, mapPosY)) {
@@ -71,6 +86,7 @@ class Enemy {
             }
         }
     
+        // bewege Gegner nach unten
         int moveDown() {
             sprite.toFront(2);
             switch(tileMap -> getTileStateDown(mapPosX, mapPosY)) {
@@ -87,6 +103,7 @@ class Enemy {
             }
         }
     
+        // bewege Gegner nach rechts
         int moveRight() {
             sprite.toFront(3);
             switch(tileMap -> getTileStateRight(mapPosX, mapPosY)) {
@@ -103,6 +120,7 @@ class Enemy {
             }
         }
     
+        // automatische Gegnerbewegung
         int autoMove() {
                 switch(rand() % 4) {
                     case 0:
@@ -116,7 +134,14 @@ class Enemy {
                     default:
                         return 0;
                 }
-        }    
+        }
+    
+        // wird beim Löschen aufgerufen, damit das Tile-Objekt auf dem der Gegner steht wieder den Zustand 0 bekommt
+        void adios() {
+           tileMap -> setState(mapPosX, mapPosY, 0);
+        }
+    
+        // sondierende Methoden //
     
         int getHP() {
             return hp;
@@ -141,11 +166,9 @@ class Enemy {
         int getMapPosY() {
            return mapPosY; 
         }
-        
-        // wird beim Löschen aufgerufen, damit das Tile auf dem der steht wieder den Tag 0 bekommt
-        void adios() {
-           tileMap -> setState(mapPosX, mapPosY, 0);
-        }
     
+        int getType() {
+            return type;
+        }
 };
 #endif

@@ -1,6 +1,7 @@
 #include "enemy.hpp"
 #include <algoviz/SVG.hpp>
 #include <vector>
+#include <cstdlib>
 
 #ifndef ENEMYLIST_HPP
 #define ENEMYLIST_HPP
@@ -9,7 +10,6 @@ class EnemyList {
     private:
         vector<Enemy> enemyList;
         vector<Enemy>::iterator it = enemyList.begin();
-        int kind = 1;
         int diff;
     
     public:
@@ -51,23 +51,38 @@ class EnemyList {
     
 
         void generateEnemyList(TileMap *tileMap, SVG *canvas, int lvl) {
-            for(int i = 0; i < numberOfEnemys(); i++) {
+            for(int i = 0; i < numberOfLightEnemies(); i++) {
                 Tile *tile = tileMap -> getRandomFreeTile();
-                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas, lvl, kind));
+                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas, lvl, 0));
+            }
+            for(int i = 0; i < numberOfHeavyEnemies(); i++) {
+                Tile *tile = tileMap -> getRandomFreeTile();
+                enemyList.push_back(Enemy(tile -> getMapX(), tile -> getMapY(), tileMap, canvas, lvl, 1));
             }
         }
     
-        int numberOfEnemys(){
-            switch(diff){
+        int numberOfLightEnemies() {
+            switch(diff) {
                 case 0:
-                    return 4;
-                    
+                    return 3 + rand() % 4;
                 case 1:
-                    return 7;
-                    
+                    return 5 + rand() % 8;
                 case 2:
-                    return 10;
-                    
+                    return 8 + rand() % 12;
+                default:
+                    return 14; 
+                    // Wer meint da rumspielen zu müssen (idk wieso) der wird halt bestraft
+            }
+        }
+    
+        int numberOfHeavyEnemies() {
+            switch(diff) {
+                case 0:
+                    return rand() % 2;
+                case 1:
+                    return 1 + rand() % 3;
+                case 2:
+                    return 3 + rand() % 5;
                 default:
                     return 14; 
                     // Wer meint da rumspielen zu müssen (idk wieso) der wird halt bestraft

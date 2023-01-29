@@ -199,19 +199,19 @@ class TileMap {
             std::random_shuffle(directions, directions + 4);
 
             for (int i = 0; i < 4; i++) {
-                if (directions[i] == 0 && x > 2 && walls[x-2][y] == 1) {
+                if (directions[i] == 0 && x > 2 && walls[x-2][y] != 0) {
                     walls[x-1][y] = 0;
                     generateMaze(x-2, y);
                 }
-                if (directions[i] == 1 && x < 12 && walls[x+2][y] == 1) {
+                if (directions[i] == 1 && x < 12 && walls[x+2][y] != 0) {
                     walls[x+1][y] = 0;
                     generateMaze(x+2, y);
                 }
-                if (directions[i] == 2 && y > 2 && walls[x][y-2] == 1) {
+                if (directions[i] == 2 && y > 2 && walls[x][y-2] != 0) {
                     walls[x][y-1] = 0;
                     generateMaze(x, y-2);
                 }
-                if (directions[i] == 3 && y < 12 && walls[x][y+2] == 1) {
+                if (directions[i] == 3 && y < 12 && walls[x][y+2] != 0) {
                     walls[x][y+1] = 0;
                     generateMaze(x, y+2);
                 }
